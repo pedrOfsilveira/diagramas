@@ -1,0 +1,81 @@
+@startuml
+autonumber
+
+actor Usuario
+actor Administrador
+
+participant "App Blue Bee" as App
+participant "Servidor" as Servidor
+participant "Banco de Dados" as BD
+
+== Onboarding Didático Interativo ==
+Usuario -> App: Primeiro acesso ao aplicativo
+App -> Servidor: Solicita dados do tutorial
+Servidor -> BD: Consulta dados do tutorial
+BD --> Servidor: Retorna dados do tutorial
+Servidor --> App: Retorna dados do tutorial
+App -> Usuario: Exibe tutorial gamificado
+
+== Visualizar Saldo Atual e Gráfico da Carteira ==
+Usuario -> App: Acessa a tela de saldo
+App -> Servidor: Solicita dados da carteira
+Servidor -> BD: Consulta dados da carteira
+BD --> Servidor: Retorna dados da carteira
+Servidor --> App: Retorna saldo e dados do gráfico
+App -> Usuario: Exibe saldo e gráfico da carteira
+
+== Simular Compra de Ativo ==
+Usuario -> App: Seleciona ativo e insere valor
+App -> Servidor: Solicita projeção de retorno
+Servidor -> BD: Consulta dados do ativo
+BD --> Servidor: Retorna dados do ativo
+Servidor --> App: Retorna projeção de retorno e análise de risco
+App -> Usuario: Exibe projeção de retorno e análise de risco
+
+== Definir Estilo de Investidor ==
+Usuario -> App: Responde questionário
+App -> Servidor: Envia respostas do questionário
+Servidor -> BD: Armazena perfil de investidor
+Servidor --> App: Retorna classificação do perfil
+App -> Usuario: Exibe perfil de investidor
+
+== Visualizar Relatório de Progresso Educacional ==
+Usuario -> App: Acessa seção de relatório
+App -> Servidor: Solicita dados do progresso
+Servidor -> BD: Consulta dados do progresso
+BD --> Servidor: Retorna dados do progresso
+Servidor --> App: Retorna relatório educacional
+App -> Usuario: Exibe relatório de progresso
+
+== Completar Desafios ==
+Usuario -> App: Seleciona desafio
+App -> Servidor: Solicita dados do desafio
+Servidor -> BD: Consulta dados do desafio
+BD --> Servidor: Retorna dados do desafio
+Servidor --> App: Retorna feedback do desafio
+App -> Usuario: Exibe feedback do desafio
+
+== Responder Quiz Interativo ==
+Usuario -> App: Responde quiz
+App -> Servidor: Envia respostas do quiz
+Servidor -> BD: Armazena pontuação e feedback
+Servidor --> App: Retorna pontuação e feedback
+App -> Usuario: Exibe pontuação e feedback
+
+== Exibir Notícias e Eventos do Mercado ==
+Usuario -> App: Acessa seção de notícias
+App -> Servidor: Solicita notícias do mercado
+Servidor -> BD: Consulta notícias econômicas
+BD --> Servidor: Retorna notícias econômicas
+Servidor --> App: Retorna lista de notícias
+App -> Usuario: Exibe notícias do mercado
+
+== Visualizar Ranking de Investidores ==
+Usuario -> App: Acessa ranking
+App -> Servidor: Solicita dados do ranking
+Servidor -> BD: Consulta dados do ranking
+BD --> Servidor: Retorna dados do ranking
+Servidor --> App: Retorna lista de investidores
+App -> Usuario: Exibe ranking de investidores
+
+@enduml

@@ -1,0 +1,226 @@
+
+DOCUMENTO DE REQUISITOS - BLUE BEE
+
+Histórico de Versões
+---------------------
+Data: 28/03/2025
+Versão: 0.1
+Descrição: Requisitos gerais e dos alunos
+Autores: Artur, Pedro
+
+1. DESCRIÇÃO GERAL DO SISTEMA
+-----------------------------
+O Blue Bee é uma aplicação móvel voltada para educação financeira, permitindo que os usuários aprendam sobre investimentos de forma acessível e gamificada. A plataforma inclui funcionalidades como simulação de investimentos, desafios, rankings, aprendizado interativo e acompanhamento de carteiras virtuais.
+
+2. PRIORIDADES DOS REQUISITOS
+-----------------------------
+- Essencial: O sistema não pode funcionar sem esses requisitos.
+- Importante: O sistema pode operar sem eles, mas com funcionalidade reduzida.
+- Desejável: Requisitos adicionais que podem ser incluídos em futuras versões.
+
+3. DESCRIÇÃO DOS USUÁRIOS
+--------------------------
+- Usuário: Qualquer pessoa interessada em aprender sobre investimentos.
+- Administrador: Responsável por gerenciar conteúdos, moderar interações e monitorar o funcionamento do sistema.
+
+4. REQUISITOS FUNCIONAIS
+------------------------
+
+RF001 - Onboarding Didático Interativo
+Prioridade: Importante
+Ator: Usuário
+Entrada: Primeiro acesso ao aplicativo
+Saída: Execução de tutorial gamificado com funções do app e conceitos financeiros.
+
+RF002 - Visualizar Saldo Atual e Gráfico da Carteira
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Nenhuma (dados carregados automaticamente)
+Saída: Exibição do saldo e gráfico da carteira.
+
+RF003 - Acessar Atalhos Rápidos
+Prioridade: Importante
+Ator: Usuário
+Entrada: Toque em atalho desejado
+Saída: Redirecionamento para Carteira, Quiz ou Perfil.
+
+RF004 - Exibir Notícias e Eventos do Mercado
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Lista de notícias econômicas relevantes.
+
+RF005 - Listar Ativos da Carteira
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Lista dos ativos (ações, FIIs, renda fixa, cripto).
+
+RF006 - Visualizar Rentabilidade Total e Individual
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Rentabilidade total e por ativo.
+
+RF007 - Acessar Histórico de Transações
+Prioridade: Importante
+Ator: Usuário
+Entrada: Seleção da opção desejada
+Saída: Histórico de compras, vendas e dividendos.
+
+RF008 - Análise Sobre a Diversificação da Carteira
+Prioridade: Importante
+Ator: Usuário
+Entrada: Dados da carteira carregados automaticamente
+Saída: Feedback textual e visual da diversificação.
+
+RF009 - Explorar Ativos
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Filtros aplicados pelo usuário
+Saída: Lista de ativos filtrados.
+
+RF010 - Simular Compra de Ativo
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Valor e ativo selecionados
+Saída: Projeção de retorno e análise de risco.
+
+RF011 - Aviso de Incompatibilidade com o Perfil de Investidor
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Tentativa de compra de ativo fora do perfil
+Saída: Modal com opções de ação (alterar perfil, continuar, cancelar).
+
+RF012 - Simular Estratégia de Investimento
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Valor disponível
+Saída: Sugestão de alocação de ativos
+
+RF013 - Projeção de Futuro
+Prioridade: Importante
+Ator: Usuário
+Entrada: Valor de aporte mensal
+Saída: Gráfico de crescimento da carteira
+
+RF014 - Completar Desafios
+Prioridade: Importante
+Ator: Usuário
+Entrada: Desafio escolhido
+Saída: Feedback sobre o desafio
+
+RF015 - Responder Quiz Interativo
+Prioridade: Importante
+Ator: Usuário
+Entrada: Respostas do quiz
+Saída: Pontuação e feedback
+
+RF016 - Ver Glossário
+Prioridade: Importante
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Visualização do glossário
+
+RF017 - Pesquisa no Glossário
+Prioridade: Importante
+Ator: Usuário
+Entrada: Palavra a ser buscada
+Saída: Palavra encontrada e exibida
+
+RF018 - Favoritar Palavras
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Seleção de uma palavra
+Saída: Palavra adicionada aos favoritos
+
+RF019 - Visualizar Palavra
+Prioridade: Importante
+Ator: Usuário
+Entrada: Seleção de uma palavra do glossário
+Saída: Exibição do significado
+
+RF020 - Visualizar Relatório de Progresso Educacional
+Prioridade: Importante
+Ator: Usuário
+Entrada: Acesso à seção de relatório
+Saída: Relatório com tópicos aprendidos, erros comuns e tempo no app
+
+RF021 - Definir Estilo de Investidor
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Respostas ao questionário
+Saída: Classificação do perfil de investidor
+
+RF022 - Visualizar Conquistas e Níveis
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Lista de conquistas desbloqueadas
+
+RF023 - Visualizar Dados
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Exibição dos dados do perfil
+
+RF024 - Alterar Dados
+Prioridade: Essencial
+Ator: Usuário
+Entrada: Dado selecionado e confirmação
+Saída: Dados atualizados
+
+RF025 - Exibir Ranking de Investidores
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Lista com melhores investidores
+
+RF026 - Enviar Convites
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Nome do amigo
+Saída: Convite enviado
+
+RF027 - Caixa Postal
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Nenhuma (dados automáticos)
+Saída: Lista de convites pendentes
+
+RF028 - Administrar Convites
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Aceitar ou recusar convite
+Saída: Adição ou remoção da lista de amigos
+
+RF029 - Excluir Amizade
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Seleção de um amigo
+Saída: Amizade removida
+
+RF030 - Ver Perfil
+Prioridade: Desejável
+Ator: Usuário
+Entrada: Seleção de um amigo
+Saída: Visualização do perfil do amigo
+
+5. REQUISITOS NÃO FUNCIONAIS
+----------------------------
+
+RNF001 - Interface Responsiva
+RNF002 - Segurança dos Dados
+RNF003 - Atualização de hora em hora
+RNF004 - Salvamento de Progresso Didático
+RNF005 - Tooltips e Glossário com explicações
+RNF006 - Modo Noturno Automático e Manual
+RNF007 - Navegação por Gestos Simples
+RNF008 - Notificações Didáticas Diárias
+RNF009 - Modo Diário: 5 Minutos por Dia
+RNF010 - Sistema de Marcação de Favoritos
+RNF011 - Recomendações Didáticas com base na Carteira
+RNF012 - Notificações Inteligentes e Contextuais
+
+(Fim)
+

@@ -1,0 +1,112 @@
+@startuml
+
+' Classes principais do sistema
+class Usuario {
+    +id: int
+    +nome: String
+    +email: String
+    +senha: String
+    +perfilInvestidor: String
+    +visualizarSaldo(): void
+    +visualizarRentabilidade(): void
+    +explorarAtivos(): void
+    +simularCompra(): void
+    +completarDesafios(): void
+    +responderQuiz(): void
+    +visualizarRelatorio(): RelatorioProgresso
+}
+
+class Administrador {
+    +id: int
+    +nome: String
+    +email: String
+    +senha: String
+    +gerenciarConteudo(): void
+    +moderarInteracoes(): void
+    +monitorarSistema(): void
+}
+
+class Ativo {
+    +id: int
+    +nome: String
+    +tipo: String
+    +valorAtual: float
+    +risco: String
+    +projetarRetorno(): float
+}
+
+class Carteira {
+    +id: int
+    +usuarioId: int
+    +ativos: List<Ativo>
+    +saldo: float
+    +rentabilidadeTotal: float
+    +analisarDiversificacao(): String
+}
+
+class Transacao {
+    +id: int
+    +carteiraId: int
+    +ativoId: int
+    +tipo: String
+    +quantidade: int
+    +data: Date
+}
+
+class Desafio {
+    +id: int
+    +descricao: String
+    +recompensa: String
+    +completar(): void
+}
+
+class Quiz {
+    +id: int
+    +perguntas: List<String>
+    +pontuacao: int
+    +responder(): void
+}
+
+class Glossario {
+    +id: int
+    +termos: Map<String, String>
+    +pesquisarTermo(termo: String): String
+    +favoritarTermo(termo: String): void
+}
+
+class RelatorioProgresso {
+    +id: int
+    +usuarioId: int
+    +topicosAprendidos: List<String>
+    +errosComuns: List<String>
+    +tempoNoApp: int
+}
+
+class Ranking {
+    +id: int
+    +usuarios: List<Usuario>
+    +exibirRanking(): void
+}
+
+class Convite {
+    +id: int
+    +remetenteId: int
+    +destinatarioId: int
+    +status: String
+    +gerenciarConvite(): void
+}
+
+' Relacionamentos entre as classes
+Usuario "1" -- "1" Carteira : possui
+Usuario "1" -- "*" Transacao : realiza
+Usuario "1" -- "*" Desafio : participa
+Usuario "1" -- "*" Quiz : responde
+Usuario "1" -- "1" RelatorioProgresso : gera
+Usuario "1" -- "*" Convite : envia/recebe
+Carteira "1" -- "*" Ativo : contém
+Glossario "1" -- "*" Usuario : acessado por
+Ranking "1" -- "*" Usuario : inclui
+Convite "1" -- "1" Usuario : remetente
+Convite "1" -- "1" Usuario : destinatario
+
+@enduml

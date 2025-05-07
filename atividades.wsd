@@ -1,0 +1,60 @@
+@startuml
+
+start
+
+:Início do Aplicativo;
+if (Primeiro Acesso?) then (Sim)
+    :Executar Onboarding Didático Interativo;
+else (Não)
+    :Carregar Dados do Usuário;
+endif
+
+:Exibir Tela Inicial;
+if (Ação do Usuário?) then (Visualizar Saldo e Gráfico)
+    :Exibir Saldo Atual e Gráfico da Carteira;
+else if (Acessar Atalhos Rápidos?) then (Sim)
+    :Redirecionar para Carteira, Quiz ou Perfil;
+else if (Explorar Ativos?) then (Sim)
+    :Exibir Lista de Ativos Filtrados;
+else if (Simular Compra de Ativo?) then (Sim)
+    :Receber Valor e Ativo Selecionados;
+    :Exibir Projeção de Retorno e Análise de Risco;
+else if (Completar Desafios?) then (Sim)
+    :Executar Desafio Escolhido;
+    :Exibir Feedback do Desafio;
+else if (Responder Quiz?) then (Sim)
+    :Receber Respostas do Quiz;
+    :Exibir Pontuação e Feedback;
+else if (Visualizar Relatório de Progresso?) then (Sim)
+    :Exibir Relatório Educacional;
+else if (Definir Estilo de Investidor?) then (Sim)
+    :Receber Respostas ao Questionário;
+    :Classificar Perfil de Investidor;
+else if (Alterar Dados do Perfil?) then (Sim)
+    :Receber Dados Atualizados;
+    :Atualizar Dados do Perfil;
+else if (Visualizar Glossário?) then (Sim)
+    :Exibir Glossário;
+else if (Pesquisar no Glossário?) then (Sim)
+    :Receber Palavra a Ser Buscada;
+    :Exibir Palavra Encontrada;
+else if (Favoritar Palavra?) then (Sim)
+    :Adicionar Palavra aos Favoritos;
+else if (Visualizar Ranking de Investidores?) then (Sim)
+    :Exibir Ranking de Investidores;
+else if (Enviar Convites?) then (Sim)
+    :Receber Nome do Amigo;
+    :Enviar Convite;
+else if (Administrar Convites?) then (Sim)
+    :Aceitar ou Recusar Convite;
+else if (Excluir Amizade?) then (Sim)
+    :Remover Amizade Selecionada;
+else if (Ver Perfil de Amigo?) then (Sim)
+    :Exibir Perfil do Amigo;
+else
+    :Aguardar Nova Ação do Usuário;
+endif
+
+stop
+
+@enduml

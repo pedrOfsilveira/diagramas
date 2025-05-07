@@ -1,0 +1,98 @@
+@startuml
+
+!define RECTANGLE_COLOR #ADD8E6
+!define ACTOR_COLOR #FFD700
+
+left to right direction
+skinparam actorStyle awesome
+skinparam rectangle {
+    BackgroundColor RECTANGLE_COLOR
+    BorderColor black
+    FontColor black
+}
+skinparam actor {
+    BackgroundColor ACTOR_COLOR
+    FontColor black
+}
+
+actor "Usuário" as Usuario
+
+rectangle "Blue Bee App" {
+    rectangle "Funcionalidades Básicas" {
+        usecase "Onboarding Didático Interativo" as UC_RF001
+        usecase "Visualizar Saldo Atual e Gráfico da Carteira" as UC_RF002
+        usecase "Acessar Atalhos Rápidos" as UC_RF003
+        usecase "Exibir Notícias e Eventos do Mercado" as UC_RF004
+    }
+
+    rectangle "Gestão de Carteira" {
+        usecase "Listar Ativos da Carteira" as UC_RF005
+        usecase "Visualizar Rentabilidade Total e Individual" as UC_RF006
+        usecase "Acessar Histórico de Transações" as UC_RF007
+        usecase "Análise Sobre a Diversificação da Carteira" as UC_RF008
+    }
+
+    rectangle "Simulações e Estratégias" {
+        usecase "Explorar Ativos" as UC_RF009
+        usecase "Simular Compra de Ativo" as UC_RF010
+        usecase "Aviso de Incompatibilidade com o Perfil de Investidor" as UC_RF011
+        usecase "Simular Estratégia de Investimento" as UC_RF012
+        usecase "Projeção de Futuro" as UC_RF013
+    }
+
+    rectangle "Educação e Gamificação" {
+        usecase "Completar Desafios" as UC_RF014
+        usecase "Responder Quiz Interativo" as UC_RF015
+        usecase "Ver Glossário" as UC_RF016
+        usecase "Pesquisa no Glossário" as UC_RF017
+        usecase "Favoritar Palavras" as UC_RF018
+        usecase "Visualizar Palavra" as UC_RF019
+        usecase "Visualizar Relatório de Progresso Educacional" as UC_RF020
+        usecase "Definir Estilo de Investidor" as UC_RF021
+        usecase "Visualizar Conquistas e Níveis" as UC_RF022
+    }
+
+    rectangle "Configurações e Social" {
+        usecase "Visualizar Dados" as UC_RF023
+        usecase "Alterar Dados" as UC_RF024
+        usecase "Exibir Ranking de Investidores" as UC_RF025
+        usecase "Enviar Convites" as UC_RF026
+        usecase "Caixa Postal" as UC_RF027
+        usecase "Administrar Convites" as UC_RF028
+        usecase "Excluir Amizade" as UC_RF029
+        usecase "Ver Perfil" as UC_RF030
+    }
+}
+
+Usuario --> UC_RF001
+Usuario --> UC_RF002
+Usuario --> UC_RF003
+Usuario --> UC_RF004
+Usuario --> UC_RF005
+Usuario --> UC_RF006
+Usuario --> UC_RF007
+Usuario --> UC_RF008
+Usuario --> UC_RF009
+Usuario --> UC_RF010
+Usuario --> UC_RF011
+Usuario --> UC_RF012
+Usuario --> UC_RF013
+Usuario --> UC_RF014
+Usuario --> UC_RF015
+Usuario --> UC_RF016
+Usuario --> UC_RF017
+Usuario --> UC_RF018
+Usuario --> UC_RF019
+Usuario --> UC_RF020
+Usuario --> UC_RF021
+Usuario --> UC_RF022
+Usuario --> UC_RF023
+Usuario --> UC_RF024
+Usuario --> UC_RF025
+Usuario --> UC_RF026
+Usuario --> UC_RF027
+Usuario --> UC_RF028
+Usuario --> UC_RF029
+Usuario --> UC_RF030
+
+@enduml
