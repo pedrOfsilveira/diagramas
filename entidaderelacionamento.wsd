@@ -1,0 +1,91 @@
+@startuml
+
+entity Usuario {
+    + id: UUID
+    + nome: String
+    + email: String
+    + senha: String
+    + perfil_investidor: String
+}
+
+entity Carteira {
+    + id: UUID
+    + saldo_atual: Decimal
+    + rentabilidade_total: Decimal
+    + usuario_id: UUID
+}
+
+entity Ativo {
+    + id: UUID
+    + nome: String
+    + tipo: String
+    + risco: String
+}
+
+entity Transacao {
+    + id: UUID
+    + tipo: String
+    + valor: Decimal
+    + data: Date
+    + carteira_id: UUID
+    + ativo_id: UUID
+}
+
+entity Desafio {
+    + id: UUID
+    + titulo: String
+    + descricao: String
+    + recompensa: String
+}
+
+entity Quiz {
+    + id: UUID
+    + pergunta: String
+    + resposta_correta: String
+}
+
+entity Glossario {
+    + id: UUID
+    + termo: String
+    + definicao: String
+}
+
+entity Conquista {
+    + id: UUID
+    + titulo: String
+    + descricao: String
+}
+
+entity RelatorioProgresso {
+    + id: UUID
+    + usuario_id: UUID
+    + topicos_aprendidos: String
+    + erros_comuns: String
+    + tempo_no_app: String
+}
+
+entity Ranking {
+    + id: UUID
+    + usuario_id: UUID
+    + posicao: Integer
+}
+
+entity Convite {
+    + id: UUID
+    + remetente_id: UUID
+    + destinatario_id: UUID
+    + status: String
+}
+
+Usuario ||--o{ Carteira : possui
+Carteira ||--o{ Transacao : realiza
+Carteira ||--o{ Ativo : contém
+Usuario ||--o{ Desafio : participa
+Usuario ||--o{ Quiz : responde
+Usuario ||--o{ Conquista : desbloqueia
+Usuario ||--o{ RelatorioProgresso : gera
+Usuario ||--o{ Ranking : aparece_em
+Usuario ||--o{ Convite : envia
+Glossario ||--o{ Usuario : favoritado_por
+
+@enduml
