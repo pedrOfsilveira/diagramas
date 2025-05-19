@@ -1,0 +1,23 @@
+@startuml
+
+title Excluir Dados
+
+|Usuário|
+start
+|Sistema|
+:Consultar Dados;
+|Usuário|
+:Excluir Conta;
+|Sistema|
+:Validar Solicitação;
+if (Conta encontrada?) then (Sim)
+    :Excluir Conta do Banco de Dados;
+    :Retornar Confirmação de Exclusão;
+else (Não)
+    :Retornar Erro - Conta Não Encontrada;
+endif
+|Usuário|
+:Exibir Mensagem ao Usuário;
+stop
+
+@enduml

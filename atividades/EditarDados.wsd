@@ -1,0 +1,18 @@
+@startuml
+
+title Editar Dados
+
+|Usuário|
+start
+|Sistema|
+:Consultar Dados;
+|Usuário|
+:Preencher Nome;
+:Preencher Email;
+:Preencher Senha;
+:Preencher Confirmar Senha;
+|Sistema|
+:Usuário]
+stop
+
+@enduml

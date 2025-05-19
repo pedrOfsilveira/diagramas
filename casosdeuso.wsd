@@ -4,16 +4,22 @@ left to right direction
 
 rectangle "Blue Bee App" {
     usecase "Onboarding Didático Interativo" as C1
-    usecase "Manter Dados" as C2
-    usecase "Exibir Notícias e Eventos do Mercado" as C3
-    usecase "Exibir Feedback Personalizado" as C4
-    usecase "Manter ativos" as C5
-    usecase "Simular Investimentos" as C6
-    usecase "Completar Desafios" as C7
-    usecase "Manter Quiz" as C8
-    usecase "Manter Glossário" as C9
-    usecase "Manter Configurações" as C10
-    usecase "Manter Amigos" as C11
+    usecase "Editar Dados" as C2
+    usecase "Excluir Dados" as C3
+    usecase "Exibir Notícias e Eventos do Mercado" as C4
+    usecase "Exibir Feedback Personalizado" as C5
+    usecase "Gerenciar Ativos" as C6
+    usecase "Simular Investimentos" as C7
+    usecase "Completar Desafios" as C8
+    usecase "Manter Quiz" as C9
+    usecase "Manter Glossário" as C10
+    usecase "Manter Configurações" as C11
+    usecase "Manter Amigos" as C12
+    ' (Editar Dados) .> C2 :include
+    ' (Excluir Conta) .> C2 :include
+    ' (Comprar Ativos) .> C5 :include
+    ' (Vender Ativos) .> C5 :include
+    ' (Pesquisar Palavra) .> C9 :include
 }
 
 :Uol:
@@ -30,10 +36,11 @@ Usuario --> C8
 Usuario --> C9
 Usuario --> C10
 Usuario --> C11
+Usuario --> C12
 
-C3 -- Uol
+C4 -- Uol
 
-C5 -- Brapi
 C6 -- Brapi
+C7 -- Brapi
 
 @enduml
