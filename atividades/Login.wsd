@@ -1,0 +1,13 @@
+@startuml
+
+title Login
+
+|Usuário|
+start
+repeat
+    :Preencher Usuário e Senha;
+    |Sistema|
+repeat while(Usuário e Senha Corretos?) is (Não) not (Sim)
+stop
+
+@enduml

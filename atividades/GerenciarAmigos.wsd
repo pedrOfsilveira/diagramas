@@ -1,0 +1,50 @@
+@startuml
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Gerenciar Amigos
+
+|Usuário|
+start
+|Sistema|
+:Inicia Usuário <$rake>;
+|Usuário|
+:Preencher Buscar;
+|Sistema|
+if(Buscar Vazio?) then (Não)
+    :Busca Correspondência;
+    if(Existe Correspondência?) then (Sim)
+        :Amigos correspondentes]
+    else (Não)
+    endif
+else (Sim)
+    :Todos os Amigos]
+endif
+|Usuário|
+if(Adicionar Amigo?) then (Sim)
+    |Sistema|
+    :Adicionar Amigos <$rake>;
+else (Não)
+endif
+|Usuário|
+if(Remover Amigo?) then (Sim)
+    |Usuário|
+    :Seleciona Amigo que Deseja Remover;
+    |Sistema|
+    :Remove Amigo da Lista de Amigos;
+else (Não)
+endif
+|Usuário|
+:Lista de Amigos]
+stop
+
+@enduml

@@ -1,18 +1,43 @@
 @startuml
 
-title Editar Dados
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Ver Perfil
 
 |Usuário|
 start
 |Sistema|
-:Consultar Dados;
+:Inicia Usuário <$rake>;
 |Usuário|
-:Preencher Nome;
-:Preencher Email;
-:Preencher Senha;
-:Preencher Confirmar Senha;
-|Sistema|
-:Usuário]
+:Dados do Perfil]
+:Estatísticas dos Investimentos]
+:Estatísticas do Progresso em Quiz]
+if(Editar Dados?) then (Sim)
+    :Preencher Nome;
+    :Preencher Gênero;
+    :Preencher Data de Nascimento;
+    :Preencher Email;
+    :Preencher Senha;
+    :Preencher Confirmar Senha;
+    |Sistema|
+    :Usuário]
+else (Não)
+endif
+|Usuário|
+if(Apagar conta?) then (Sim)
+    |Sistema|
+    :Anonimizar Dados <$rake>;
+else (Não)
+endif
 stop
 
 @enduml

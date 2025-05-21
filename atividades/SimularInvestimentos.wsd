@@ -1,0 +1,40 @@
+@startuml
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Simular Investimentos
+
+|Usuário|
+start
+|Sistema|
+:Inicia Usuário <$rake>;
+|Usuário|
+repeat
+    :Preencher Investimento Inicial;
+    :Preencher Aporte Mensal;
+    :Preencher Periodo de Aplicação;
+    :Selecionar Tipo de Investimento;
+    note right
+        CDB/LC/Títulos públicos/Debêntures
+        ====
+        LCI/LCA
+        ====
+        Tesouro
+    end note
+    :Selecionar Pré, Pós Fixado ou IPCA;
+    |Sistema|
+repeat while(Todas Informações Foram Preenchidas?) is (Não) not (Sim)
+:Busca Valores na Brapi;
+:Calcula Montante Final;
+stop
+
+@enduml

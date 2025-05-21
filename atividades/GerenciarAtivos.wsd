@@ -1,0 +1,43 @@
+@startuml
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Gerenciar Ativos
+
+|Usuário|
+start
+|Sistema|
+:Inicia Usuário <$rake>;
+|Usuário|
+:Seleciona comprar ou vender;
+|Sistema|
+if(Selecionou Comprar?) then (Sim)
+|Usuário|
+    :Seleciona Quantidade;
+    |Sistema|
+    if(Saldo Suficiente?) then (Sim)
+        :Adiciona Ativo à Lista de Ativos;
+    else (Não)
+    endif
+else (Não)
+|Usuário|
+    :Seleciona Quantidade;
+    |Sistema|
+    if(Quantidade Possível?) then (Sim)
+        :Remove Ativo da Lista de Ativos;
+    else (Não)
+    endif
+endif
+:Lista de Ativos]
+stop
+
+@enduml
