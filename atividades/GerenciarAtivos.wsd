@@ -17,6 +17,7 @@ title Gerenciar Ativos
 start
 |Sistema|
 :Inicia Usuário <$rake>;
+:Carrega Dados da Brapi]
 |Usuário|
 :Seleciona comprar ou vender;
 |Sistema|
@@ -24,16 +25,20 @@ if(Selecionou Comprar?) then (Sim)
 |Usuário|
     :Seleciona Quantidade;
     |Sistema|
+    :Calcula Valor Final da Compra;
     if(Saldo Suficiente?) then (Sim)
         :Adiciona Ativo à Lista de Ativos;
+        :Subtrai Do Saldo o Valor Final da Compra;
     else (Não)
     endif
 else (Não)
 |Usuário|
     :Seleciona Quantidade;
     |Sistema|
+    :Calcula Valor Final da Venda;
     if(Quantidade Possível?) then (Sim)
         :Remove Ativo da Lista de Ativos;
+        :Adiciona ao Saldo o Valor Final da Venda;
     else (Não)
     endif
 endif

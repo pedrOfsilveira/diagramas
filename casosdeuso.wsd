@@ -15,12 +15,6 @@ rectangle "Blue Bee App" {
     usecase "Gerenciar Configurações" as GerenciarConfiguracoes
     usecase "Gerenciar Amigos" as GerenciarAmigos
     usecase "Gerenciar Pedidos" as GerenciarPedidos
-    ' falta no diagrama de atividades:
-        ' Exibir Notícias e Eventos do Mercado
-        ' Exibir Feedback Personalizado
-        ' Completar Desafios
-        ' Iniciar Quiz
-        ' Gerenciar Configurações
 }
 
 :Uol:

@@ -1,0 +1,38 @@
+@startuml
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Completar Desafios
+
+|Usuário|
+start
+|Sistema|
+:Inicia Usuário <$rake>;
+if(Novo Dia?) then (Sim)
+    :Remove Todos os Desafios da Lista de Desafios Diários;
+    :Adiciona Novos Desafios á Lista de Desafios Diários;
+else (Não)
+endif
+if(Desafios Concluidos?) then (Sim)
+    :Adiciona Saldo ou Ativo ao Usuário;
+    if(Desafio Diário?) then (Sim)
+        :Remove Desafio da Lista de Desafios Diários;
+    else (Não)
+        :Adiciona Desafio a Lista de Conquistas;
+    endif
+else (Não)
+endif
+|Usuário|
+:Lista de Desafios]
+stop
+
+@enduml
