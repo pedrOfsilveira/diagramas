@@ -1,112 +1,324 @@
 @startuml
 
-' Classes principais do sistema
-class Usuario {
-    +id: int
-    +nome: String
-    +email: String
-    +senha: String
-    +perfilInvestidor: String
-    +visualizarSaldo(): void
-    +visualizarRentabilidade(): void
-    +explorarAtivos(): void
-    +simularCompra(): void
-    +completarDesafios(): void
-    +responderQuiz(): void
-    +visualizarRelatorio(): RelatorioProgresso
+' Definição de Enums (Melhora a clareza)
+enum EstiloInvestidor {
+  CONSERVADOR
+  MODERADO
+  AGRESSIVO
 }
 
-class Administrador {
-    +id: int
-    +nome: String
-    +email: String
-    +senha: String
-    +gerenciarConteudo(): void
-    +moderarInteracoes(): void
-    +monitorarSistema(): void
+enum TipoAtivo {
+  ACAO
+  FII
+  RENDA_FIXA
+  CRIPTO
 }
 
-class Ativo {
-    +id: int
-    +nome: String
-    +tipo: String
-    +valorAtual: float
-    +risco: String
-    +projetarRetorno(): float
+enum TipoTransacao {
+  COMPRA
+  VENDA
+  DIVIDENDO
 }
 
-class Carteira {
-    +id: int
-    +usuarioId: int
-    +ativos: List<Ativo>
-    +saldo: float
-    +rentabilidadeTotal: float
-    +analisarDiversificacao(): String
+enum StatusConvite {
+  PENDENTE
+  ACEITO
+  RECUSADO
 }
 
-class Transacao {
-    +id: int
-    +carteiraId: int
-    +ativoId: int
-    +tipo: String
-    +quantidade: int
-    +data: Date
+enum NivelRisco {
+    BAIXO
+    MEDIO
+    ALTO
 }
 
-class Desafio {
-    +id: int
-    +descricao: String
-    +recompensa: String
-    +completar(): void
-}
-
-class Quiz {
-    +id: int
-    +perguntas: List<String>
-    +pontuacao: int
-    +responder(): void
-}
-
-class Glossario {
-    +id: int
-    +termos: Map<String, String>
-    +pesquisarTermo(termo: String): String
-    +favoritarTermo(termo: String): void
+' Classes Auxiliares / Tipos de Dados (Definidas para clareza)
+class Pergunta {
+  - texto: String
+  - opcoes: List<String>
+  - respostaCorreta: Integer
 }
 
 class RelatorioProgresso {
-    +id: int
-    +usuarioId: int
-    +topicosAprendidos: List<String>
-    +errosComuns: List<String>
-    +tempoNoApp: int
+    - topicosAprendidos: List<String>
+    - simulacoesRealizadas: Integer
+    - errosComuns: List<String>
+    - sugestoes: List<String>
+}
+
+class DadosGrafico {
+    - eixos: Map
+    - pontos: List<Ponto>
+}
+
+class ResultadoSimulacao {
+    - projecao: Decimal
+    - analiseRisco: String
+}
+
+class SugestaoAlocacao {
+    - alocacao: Map<TipoAtivo, Percentual>
+}
+
+class Preco {
+    - data: DateTime
+    - valor: Decimal
+}
+
+class EntradaRanking {
+    - usuario: Usuario
+    - pontuacao: Decimal
+}
+
+
+' Classes principais do sistema
+class Usuario {
+    - idUsuario: Integer
+    - nome: String
+    - email: String
+    - senhaHash: String
+    - primeiroAcesso: Boolean
+    - nivel: Integer
+
+    + cadastrar(nome, email, senha): void
+    + login(email, senha): Boolean
+    + logout(): void
+    + visualizarDados(): Map
+    + alterarDados(novosDados): void
+    + iniciarOnboarding(): void
+    + responderQuestionarioPerfil(respostas): void
+    + enviarConvite(usuarioAlvo): void
+    + gerenciarConvite(convite, acao): void
+    + removerAmigo(amigo): void
+    + visualizarPerfilAmigo(amigo): Perfil
+    + getPerfil(): Perfil
+    + getCarteira(): Carteira
+    + getAmigos(): List<Usuario>
+    + getConvites(): List<Convite>
+    + getConquistas(): List<Conquista>
+    + getNivel(): Integer
+    + getProgressoEducacional(): RelatorioProgresso
+}
+
+class Administrador {
+    - nivelPermissao: Integer
+
+    + gerenciarConteudo(conteudoId, acao): void
+    + moderarInteracao(usuarioId, tipo, acao): void
+    + monitorarSistema(): Map
+    + gerenciarUsuario(usuarioId, acao): void
+    + adicionarNoticia(noticia): void
+    + editarGlossario(termo, definicao): void
+}
+
+class Perfil {
+    - idPerfil: Integer
+    - estiloInvestidor: EstiloInvestidor
+    - dadosVisiveis: Map
+
+    + definirEstiloInvestidor(respostasQuestionario): void
+    + getEstiloInvestidor(): EstiloInvestidor
+    + visualizarDados(): Map
+    + alterarDados(novosDados): void
+}
+
+class Carteira {
+    - idCarteira: Integer
+    - saldo: Decimal
+    ' REMOVIDO: - ativos: Map<Ativo, Quantidade> (Agora usa AtivoCarteira)
+    ' REMOVIDO: - historicoTransacoes: List<Transacao> (Agora usa Relação)
+
+    + getSaldoAtual(): Decimal
+    + getRentabilidadeTotal(): Decimal
+    + getRentabilidadeAtivo(ativo): Decimal
+    + listarAtivosCarteira(): List<AtivoCarteira>
+    + getHistorico(): List<Transacao>
+    + getAnaliseDiversificacao(): String
+    + adicionarTransacao(transacao): void
+    + getGraficoRentabilidade(): DadosGrafico
+    - recalcularValores(): void
+}
+
+class Ativo {
+    - idAtivo: Integer
+    - nome: String
+    - ticker: String
+    - tipo: TipoAtivo
+    - precoAtual: Decimal
+    - historicoPrecos: List<Preco>
+    - riscoAssociado: NivelRisco
+    - descricao: String
+
+    + getDetalhes(): Map
+    + getPrecoAtual(): Decimal
+    + getRisco(): NivelRisco
+    + verificarCompatibilidade(perfilInvestidor): Boolean
+    + simularCompra(valor, perfilInvestidor): ResultadoSimulacao
+    + atualizarPreco(novoPreco): void
+}
+
+class Transacao {
+    - idTransacao: Integer
+    - dataHora: DateTime
+    - tipo: TipoTransacao
+    ' REMOVIDO: - ativo: Ativo (Agora usa Relação)
+    - quantidade: Decimal
+    - precoUnitario: Decimal
+    - valorTotal: Decimal
+
+    + getDetalhesTransacao(): Map
+}
+
+class Simulacao {
+    - idSimulacao: Integer
+    - dataHora: DateTime
+    - tipoSimulacao: Enum
+    - entradas: Map
+    - saidas: Map
+
+    + simularCompraAtivo(ativo, valor): ResultadoSimulacao
+    + simularEstrategia(valorDisponivel): SugestaoAlocacao
+    + gerarProjecaoFuturo(aporteMensal): DadosGrafico
+    - calcularProjecao(params): Map
+    - analisarRisco(params): Map
+}
+
+abstract class ConteudoEducacional {
+    - idConteudo: Integer
+    - titulo: String
+    - descricao: String
+    # tipo: Enum
+    # areaConhecimento: String
+
+    + getTitulo(): String
+    + getDescricao(): String
+    + {abstract} apresentar(): Map
+    + {abstract} submeter(usuario, dados): Map
+}
+
+class Desafio extends ConteudoEducacional {
+    ' REMOVIDO: - idDesafio: Integer (Usa idConteudo)
+    ' REMOVIDO: - titulo: String (Herdado)
+    ' REMOVIDO: - descricao: String (Herdado)
+    - statusUsuario: Map<Usuario, Enum>
+    - recompensa: Conquista
+
+    + iniciarDesafio(usuario): void
+    + submeterResultado(usuario, resultado): Map
+    + getDetalhes(): Map
+}
+
+class Quiz extends ConteudoEducacional {
+    ' REMOVIDO: - idQuiz: Integer (Usa idConteudo)
+    ' REMOVIDO: - titulo: String (Herdado)
+    - perguntas: List<Pergunta>
+    - pontuacoes: Map<Usuario, Integer>
+
+    + iniciarQuiz(): List<Pergunta>
+    + submeterRespostas(usuario, respostas): Map
+    + getTitulo(): String
+}
+
+class TermoGlossario {
+    - idTermo: Integer
+    - palavra: String
+    - definicao: String
+
+    + getPalavra(): String
+    + getDefinicao(): String
+    + {static} buscar(chave: String): List<TermoGlossario>
+    + {static} listarTodos(): List<TermoGlossario>
+}
+
+class Noticia {
+    - idNoticia: Integer
+    - titulo: String
+    - resumo: String
+    - link: String
+    - dataPublicacao: DateTime
+
+    + getTitulo(): String
+    + getResumo(): String
+    + {static} listarRecentes(): List<Noticia>
+}
+
+class Conquista {
+    - idConquista: Integer
+    - nome: String
+    - descricao: String
+    - iconeURL: String
+
+    + getNome(): String
+    + getDescricao(): String
+    + {static} listarTodas(): List<Conquista>
 }
 
 class Ranking {
-    +id: int
-    +usuarios: List<Usuario>
-    +exibirRanking(): void
+    - posicoes: List<EntradaRanking>
+
+    + getRankingAtual(): List<EntradaRanking>
+    - calcularPosicoes(): void
 }
 
 class Convite {
-    +id: int
-    +remetenteId: int
-    +destinatarioId: int
-    +status: String
-    +gerenciarConvite(): void
+    - idConvite: Integer
+    ' REMOVIDO: - remetente: Usuario (Agora usa Relação)
+    ' REMOVIDO: - destinatario: Usuario (Agora usa Relação)
+    - status: StatusConvite
+    - dataEnvio: DateTime
+
+    + aceitar(): void
+    + recusar(): void
+    + getStatus(): StatusConvite
 }
 
-' Relacionamentos entre as classes
-Usuario "1" -- "1" Carteira : possui
-Usuario "1" -- "*" Transacao : realiza
-Usuario "1" -- "*" Desafio : participa
-Usuario "1" -- "*" Quiz : responde
-Usuario "1" -- "1" RelatorioProgresso : gera
-Usuario "1" -- "*" Convite : envia/recebe
-Carteira "1" -- "*" Ativo : contém
-Glossario "1" -- "*" Usuario : acessado por
-Ranking "1" -- "*" Usuario : inclui
-Convite "1" -- "1" Usuario : remetente
-Convite "1" -- "1" Usuario : destinatario
+class AtivoCarteira {
+  - quantidade: Decimal
+  - precoMedioCompra: Decimal
+  + getQuantidade(): Decimal
+  + setQuantidade(novaQuantidade: Decimal): void
+  + adicionarQuantidade(valor: Decimal): void
+  + removerQuantidade(valor: Decimal): void
+  + getValorTotalAtual(precoAtualAtivo: Decimal): Decimal
+}
+
+
+' Relacionamentos
+Administrador --|> Usuario
+Desafio --|> ConteudoEducacional
+Quiz --|> ConteudoEducacional
+
+Usuario "1" *-- "1" Perfil
+Usuario "1" *-- "1" Carteira
+Usuario "1" --> "1" RelatorioProgresso : possui
+Usuario "0..*" -- "0..*" Usuario : amigos
+Usuario "0..*" -- "1" Convite : remetente
+Usuario "0..*" -- "1" Convite : destinatario
+Usuario "0..*" -- "0..*" Conquista : possui
+Usuario "0..*" -- "0..*" ConteudoEducacional : interage com
+Usuario "0..*" -- "0..*" TermoGlossario : favorita
+
+Ativo "1" *-- "0..*" Preco : historico
+Quiz "1" *-- "1..*" Pergunta
+Carteira ..> DadosGrafico : gera
+Usuario "1" *-- "1" RelatorioProgresso
+Simulacao ..> ResultadoSimulacao : gera
+Simulacao ..> SugestaoAlocacao : gera
+Ranking "1" *-- "0..*" EntradaRanking
+EntradaRanking "1" --> "1" Usuario
+
+Carteira "1" -- "0..*" AtivoCarteira
+Ativo "1" -- "0..*" AtivoCarteira
+Carteira "1" *-- "0..*" Transacao
+Transacao "0..*" --> "1" Ativo
+
+Simulacao "0..*" --> "1" Usuario : realizada por
+Quiz "1" *-- "1..*" Pergunta
+Ranking "1" -- "0..*" Usuario : lista
+Ranking "1" -- "0..*" EntradaRanking : contém
+EntradaRanking "1" --> "1" Usuario
+
+Administrador --> Noticia : gerencia
+Administrador --> TermoGlossario : gerencia
 
 @enduml
