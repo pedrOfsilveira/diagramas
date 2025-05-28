@@ -1,0 +1,70 @@
+@startuml
+
+title Diagrama de Sequência: Vender Ativo
+
+actor ":Usuario" as User
+participant ":TelaAtivos" as Tela
+participant ":AtivoController" as Controller
+participant ":Carteira" as CarteiraObj
+participant ":Ativo" as AtivoObj
+participant ":AtivoCarteira" as ItemCarteira
+
+User -> Tela: Acessa tela "Meus Ativos"
+activate Tela
+
+User -> Tela: Seleciona Ativo para Vender
+User -> Tela: Informa Quantidade a Vender
+User -> Tela: Clica no botão "Confirmar Venda"
+
+Tela -> Controller: venderAtivo(usuarioId, ativoId, quantidade)
+activate Controller
+
+Controller -> CarteiraObj: verificarQuantidadeDisponivel(ativoId, quantidade)
+activate CarteiraObj
+CarteiraObj --> Controller: quantidadeOk
+deactivate CarteiraObj
+
+alt Quantidade Disponível para Venda
+
+    Controller -> AtivoObj: getPrecoAtual()
+    activate AtivoObj
+    AtivoObj --> Controller: precoVendaUnitario
+    deactivate AtivoObj
+
+    Controller -> CarteiraObj: calcularValorTotalVenda(precoVendaUnitario, quantidade)
+    activate CarteiraObj
+    CarteiraObj --> Controller: valorTotalCalculado
+    deactivate CarteiraObj
+
+    Controller -> CarteiraObj: efetuarVendaAtivo(ativoId, quantidade, valorTotalCalculado)
+    activate CarteiraObj
+
+    CarteiraObj -> ItemCarteira: removerQuantidade(quantidade)
+    activate ItemCarteira
+    ItemCarteira --> CarteiraObj: operacaoItemOk
+    deactivate ItemCarteira
+
+    create participant ":Transacao" as RegTransacao
+    CarteiraObj -> RegTransacao: new("VENDA", ativoId, quantidade, valorTotalCalculado)
+    activate RegTransacao
+    RegTransacao --> CarteiraObj: transacaoRegistrada
+    deactivate RegTransacao
+    
+    CarteiraObj -> CarteiraObj: adicionarAoSaldo(valorTotalCalculado)
+    CarteiraObj --> Controller: vendaConfirmada
+    deactivate CarteiraObj
+
+    Controller --> Tela: vendaRealizadaComSucesso("Venda realizada!")
+    Tela --> User: Exibe "Venda realizada com sucesso!"
+
+else Quantidade Indisponível
+
+    Controller --> Tela: exibirErroVenda("Quantidade indisponível para venda.")
+    Tela --> User: Mostra Erro de Quantidade
+
+end
+
+deactivate Controller
+deactivate Tela
+
+@enduml

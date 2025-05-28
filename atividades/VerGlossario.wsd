@@ -1,36 +1,25 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Ver Glossário
+title Ver Glossário (Rótulos Corrigidos)
 
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
+:Inicia Usuário;
 |Usuário|
 :Preencher Buscar;
 |Sistema|
 if(Buscar Vazio?) then (Não)
     :Busca Correspondência;
     if(Existe Correspondência?) then (Sim)
-        :Palavras correspondentes]
+        :Palavras correspondentes;
     else (Não)
     endif
 else (Sim)
-    :Todas as Palavras]
+    :Todas as Palavras;
 endif
 |Usuário|
-:Lista de Palavras]
+:Lista de Palavras;
 stop
 
 @enduml

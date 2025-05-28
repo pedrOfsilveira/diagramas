@@ -1,40 +1,30 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Simular Investimentos
+title Simular Investimentos (Fluxo Corrigido)
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
-|Usuário|
 repeat
     :Preencher Investimento Inicial;
     :Preencher Aporte Mensal;
-    :Preencher Periodo de Aplicação;
+    :Preencher Período de Aplicação;
     :Selecionar Tipo de Investimento;
     note right
+        Exemplos de Tipos:
         CDB/LC/Títulos públicos/Debêntures
-        ====
         LCI/LCA
-        ====
         Tesouro
     end note
-    :Selecionar Pré, Pós Fixado ou IPCA;
-    |Sistema|
-repeat while(Todas Informações Foram Preenchidas?) is (Não) not (Sim)
-:Busca Valores na Brapi;
-:Calcula Montante Final;
+    :Selecionar Indexador (Pré, Pós Fixado ou IPCA);
+    :Confirma o preenchimento dos dados (ex: Clica "Simular");
+|Sistema|
+    :Sistema Verifica se Todas as Informações Necessárias Foram Preenchidas;
+repeat while (Todas as Informações Foram Preenchidas?) is (Não)
+
+:Busca Valores e Taxas atuais na API Brapi;
+:Calcula Montante Final e a Projeção do Investimento;
+|Usuário|
+:Visualiza Resultado da Simulação (Gráfico e Valores);
 stop
 
 @enduml

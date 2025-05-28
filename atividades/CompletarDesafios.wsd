@@ -1,38 +1,36 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Completar Desafios
+title Completar Desafios (RF014)
 
 |Usuário|
 start
+:Acessa a área de "Desafios";
 |Sistema|
-:Inicia Usuário <$rake>;
-if(Novo Dia?) then (Sim)
-    :Remove Todos os Desafios da Lista de Desafios Diários;
-    :Adiciona Novos Desafios á Lista de Desafios Diários;
+if (Novo Dia?) then (Sim)
+    :Remove Desafios Diários antigos (se aplicável);
+    :Adiciona/Atualiza Lista de Desafios Diários;
 else (Não)
 endif
-if(Desafios Concluidos?) then (Sim)
-    :Adiciona Saldo ou Ativo ao Usuário;
-    if(Desafio Diário?) then (Sim)
-        :Remove Desafio da Lista de Desafios Diários;
-    else (Não)
-        :Adiciona Desafio a Lista de Conquistas;
-    endif
-else (Não)
+:Exibe Lista de Desafios disponíveis (Diários, Gerais, etc.);
+|Usuário|
+:Seleciona um Desafio para iniciar;
+|Sistema|
+:Apresenta os detalhes e as tarefas do Desafio selecionado;
+|Usuário|
+:Realiza as ações/tarefas propostas pelo Desafio;
+:Submete a conclusão ou resposta do Desafio;
+|Sistema|
+:Verifica se os critérios do Desafio foram atendidos;
+if (Critérios Atendidos?) then (Sim)
+    :Marca o Desafio como "Concluído com Sucesso";
+    :Processa Recompensa (ex: Conquista, pontos);
+    :Prepara feedback de sucesso e informa sobre a recompensa;
+else (Não - Critérios Não Atendidos)
+    :Marca a tentativa do Desafio como "Falha" ou "Incompleta";
+    :Prepara feedback construtivo ou dicas (se aplicável);
 endif
 |Usuário|
-:Lista de Desafios]
+:Visualiza o Feedback sobre o Desafio (e recompensa, se houver);
 stop
 
 @enduml

@@ -1,6 +1,5 @@
 @startuml
 
-' Definição de Enums (Melhora a clareza)
 enum EstiloInvestidor {
   CONSERVADOR
   MODERADO
@@ -32,7 +31,26 @@ enum NivelRisco {
     ALTO
 }
 
-' Classes Auxiliares / Tipos de Dados (Definidas para clareza)
+enum TipoSimulacao {
+  COMPRA_DE_ATIVO
+  ESTRATEGIA_DE_INVESTIMENTO
+  PROJECAO_DE_FUTURO
+}
+
+enum StatusDesafioUsuario {
+  NAO_INICIADO
+  EM_ANDAMENTO
+  CONCLUIDO_COM_SUCESSO
+  TENTATIVA_FALHA
+}
+
+enum TipoConteudoEducacional {
+  QUIZ
+  DESAFIO
+  ARTIGO_TEXTUAL
+  VIDEO_AULA
+}
+
 class Pergunta {
   - texto: String
   - opcoes: List<String>
@@ -70,8 +88,6 @@ class EntradaRanking {
     - pontuacao: Decimal
 }
 
-
-' Classes principais do sistema
 class Usuario {
     - idUsuario: Integer
     - nome: String
@@ -79,7 +95,6 @@ class Usuario {
     - senhaHash: String
     - primeiroAcesso: Boolean
     - nivel: Integer
-
     + cadastrar(nome, email, senha): void
     + login(email, senha): Boolean
     + logout(): void
@@ -100,9 +115,8 @@ class Usuario {
     + getProgressoEducacional(): RelatorioProgresso
 }
 
-class Administrador {
+class Administrador extends Usuario {
     - nivelPermissao: Integer
-
     + gerenciarConteudo(conteudoId, acao): void
     + moderarInteracao(usuarioId, tipo, acao): void
     + monitorarSistema(): Map
@@ -115,9 +129,9 @@ class Perfil {
     - idPerfil: Integer
     - estiloInvestidor: EstiloInvestidor
     - dadosVisiveis: Map
-
     + definirEstiloInvestidor(respostasQuestionario): void
     + getEstiloInvestidor(): EstiloInvestidor
+    + setEstiloInvestidor(estilo: EstiloInvestidor): void
     + visualizarDados(): Map
     + alterarDados(novosDados): void
 }
@@ -125,18 +139,23 @@ class Perfil {
 class Carteira {
     - idCarteira: Integer
     - saldo: Decimal
-    ' REMOVIDO: - ativos: Map<Ativo, Quantidade> (Agora usa AtivoCarteira)
-    ' REMOVIDO: - historicoTransacoes: List<Transacao> (Agora usa Relação)
-
     + getSaldoAtual(): Decimal
     + getRentabilidadeTotal(): Decimal
-    + getRentabilidadeAtivo(ativo): Decimal
+    + getRentabilidadeAtivo(ativo: Ativo): Decimal
     + listarAtivosCarteira(): List<AtivoCarteira>
     + getHistorico(): List<Transacao>
     + getAnaliseDiversificacao(): String
-    + adicionarTransacao(transacao): void
+    + adicionarTransacao(transacao: Transacao): void
     + getGraficoRentabilidade(): DadosGrafico
     - recalcularValores(): void
+    + calcularValorCompra(preco: Decimal, quantidade: Integer): Decimal
+    + verificarSaldoSuficiente(valor: Decimal): Boolean
+    + efetuarCompra(ativoId: Integer, quantidade: Integer, valorTotal: Decimal): Map
+    + subtrairDoSaldo(valor: Decimal): void
+    + verificarQuantidadeDisponivel(ativoId: Integer, quantidade: Integer): Boolean
+    + calcularValorTotalVenda(preco: Decimal, quantidade: Integer): Decimal
+    + efetuarVendaAtivo(ativoId: Integer, quantidade: Integer, valorTotal: Decimal): Map
+    + adicionarAoSaldo(valor: Decimal): void
 }
 
 class Ativo {
@@ -148,82 +167,72 @@ class Ativo {
     - historicoPrecos: List<Preco>
     - riscoAssociado: NivelRisco
     - descricao: String
-
     + getDetalhes(): Map
     + getPrecoAtual(): Decimal
     + getRisco(): NivelRisco
-    + verificarCompatibilidade(perfilInvestidor): Boolean
-    + simularCompra(valor, perfilInvestidor): ResultadoSimulacao
-    + atualizarPreco(novoPreco): void
+    + verificarCompatibilidade(perfilInvestidor: EstiloInvestidor): Boolean
+    + simularCompra(valor: Decimal, perfilInvestidor: Perfil): ResultadoSimulacao
+    + atualizarPreco(novoPreco: Decimal): void
 }
 
 class Transacao {
     - idTransacao: Integer
     - dataHora: DateTime
     - tipo: TipoTransacao
-    ' REMOVIDO: - ativo: Ativo (Agora usa Relação)
     - quantidade: Decimal
     - precoUnitario: Decimal
     - valorTotal: Decimal
-
     + getDetalhesTransacao(): Map
 }
 
 class Simulacao {
     - idSimulacao: Integer
     - dataHora: DateTime
-    - tipoSimulacao: Enum
+    - tipoSimulacao: TipoSimulacao
     - entradas: Map
     - saidas: Map
-
-    + simularCompraAtivo(ativo, valor): ResultadoSimulacao
-    + simularEstrategia(valorDisponivel): SugestaoAlocacao
-    + gerarProjecaoFuturo(aporteMensal): DadosGrafico
-    - calcularProjecao(params): Map
-    - analisarRisco(params): Map
+    + simularCompraAtivo(ativo: Ativo, valor: Decimal): ResultadoSimulacao
+    + simularEstrategia(valorDisponivel: Decimal): SugestaoAlocacao
+    + gerarProjecaoFuturo(aporteMensal: Decimal): DadosGrafico
+    + calcularProjecaoGeral(dadosEntrada: Map, taxasRetornadas: Map): ResultadoSimulacao
+    - analisarRisco(params: Map): Map
 }
 
 abstract class ConteudoEducacional {
     - idConteudo: Integer
     - titulo: String
     - descricao: String
-    # tipo: Enum
+    # tipo: TipoConteudoEducacional
     # areaConhecimento: String
-
     + getTitulo(): String
     + getDescricao(): String
     + {abstract} apresentar(): Map
-    + {abstract} submeter(usuario, dados): Map
+    + {abstract} submeter(usuarioId: Integer, dados: Map): Map
 }
 
 class Desafio extends ConteudoEducacional {
-    ' REMOVIDO: - idDesafio: Integer (Usa idConteudo)
-    ' REMOVIDO: - titulo: String (Herdado)
-    ' REMOVIDO: - descricao: String (Herdado)
-    - statusUsuario: Map<Usuario, Enum>
+    - statusUsuario: Map<Usuario, StatusDesafioUsuario>
     - recompensa: Conquista
-
-    + iniciarDesafio(usuario): void
-    + submeterResultado(usuario, resultado): Map
+    + iniciarDesafio(usuario: Usuario): void
+    + submeterResultado(usuarioId: Integer, resultado: Map): Map
     + getDetalhes(): Map
 }
 
 class Quiz extends ConteudoEducacional {
-    ' REMOVIDO: - idQuiz: Integer (Usa idConteudo)
-    ' REMOVIDO: - titulo: String (Herdado)
     - perguntas: List<Pergunta>
     - pontuacoes: Map<Usuario, Integer>
-
     + iniciarQuiz(): List<Pergunta>
-    + submeterRespostas(usuario, respostas): Map
+    + submeterRespostas(usuario: Usuario, respostas: Map): Map
     + getTitulo(): String
+    + getPerguntas(): List<Pergunta>
+    + verificarResposta(perguntaId: Integer, respostaUsuario: String): Boolean
+    + calcularResultadoFinal(): Map
 }
 
 class TermoGlossario {
     - idTermo: Integer
     - palavra: String
     - definicao: String
-
     + getPalavra(): String
     + getDefinicao(): String
     + {static} buscar(chave: String): List<TermoGlossario>
@@ -236,7 +245,6 @@ class Noticia {
     - resumo: String
     - link: String
     - dataPublicacao: DateTime
-
     + getTitulo(): String
     + getResumo(): String
     + {static} listarRecentes(): List<Noticia>
@@ -247,7 +255,6 @@ class Conquista {
     - nome: String
     - descricao: String
     - iconeURL: String
-
     + getNome(): String
     + getDescricao(): String
     + {static} listarTodas(): List<Conquista>
@@ -255,21 +262,19 @@ class Conquista {
 
 class Ranking {
     - posicoes: List<EntradaRanking>
-
     + getRankingAtual(): List<EntradaRanking>
     - calcularPosicoes(): void
 }
 
 class Convite {
     - idConvite: Integer
-    ' REMOVIDO: - remetente: Usuario (Agora usa Relação)
-    ' REMOVIDO: - destinatario: Usuario (Agora usa Relação)
     - status: StatusConvite
     - dataEnvio: DateTime
-
     + aceitar(): void
     + recusar(): void
     + getStatus(): StatusConvite
+    + getDados(): Map
+    + arquivar(): void
 }
 
 class AtivoCarteira {
@@ -282,8 +287,90 @@ class AtivoCarteira {
   + getValorTotalAtual(precoAtualAtivo: Decimal): Decimal
 }
 
+class DesafioController {
+    + carregarDesafiosDisponiveis(): List<Desafio>
+    + iniciarDesafio(usuarioId: Integer, desafioId: Integer): Desafio
+    + submeterSolucaoDesafio(usuarioId: Integer, desafioId: Integer, solucao: Map): Map
+}
 
-' Relacionamentos
+class ProgressoService {
+    + marcarDesafioComoConcluido(usuarioId: Integer, desafioId: Integer): Map
+    + adicionarExperiencia(tema: String, pontos: Integer): Map
+    + atualizarEstatisticasQuiz(quizId: Integer, resultado: Map): Map
+}
+
+class RecompensaService {
+    + concederRecompensaDesafio(usuarioId: Integer, desafioId: Integer): Map
+    + concederRecompensaQuiz(usuarioId: Integer, quizId: Integer, resultado: Map): Map
+}
+
+class AtivoController {
+    + comprarAtivo(usuarioId: Integer, ativoId: Integer, quantidade: Integer): Map
+    + venderAtivo(usuarioId: Integer, ativoId: Integer, quantidade: Integer): Map
+}
+
+class PerfilController {
+    + solicitarQuestionarioPerfil(): List<Pergunta>
+    + submeterRespostasQuestionario(usuarioId: Integer, respostas: Map): Map
+}
+
+class Questionario {
+    - idQuestionario: Integer
+    - nome: String
+    - perguntas: List<Pergunta>
+    + getPerguntas(): List<Pergunta>
+}
+
+class NoticiaController {
+    + carregarNoticiasDoMercado(): List<Noticia>
+}
+
+class PedidoController {
+    + carregarPedidosPendentes(usuarioId: Integer): List<Convite>
+    + processarDecisaoPedido(conviteId: Integer, usuarioId: Integer, acao: String): Map
+}
+
+class AmizadeService {
+    + registrarNovaAmizade(usuarioId1: Integer, usuarioId2: Integer): Map
+    + desfazerAmizade(usuarioId1: Integer, usuarioId2: Integer): Map
+}
+
+class QuizController {
+    + carregarQuizzesDisponiveis(): List<Quiz>
+    + iniciarQuiz(quizId: Integer): Quiz
+    + submeterResposta(quizId: Integer, perguntaId: Integer, respostaUsuario: String): Map
+}
+
+class AuthController {
+    + requisitarLogin(email: String, senha: String): Map
+    + requisitarCadastro(dadosCadastro: Map): Map
+    + requisitarLogout(usuarioId: Integer): void
+}
+
+class SessaoUsuario {
+    - idSessao: String
+    - usuarioId: Integer
+    - token: String
+    - dataCriacao: DateTime
+    - dataExpiracao: DateTime
+    + SessaoUsuario(uid: Integer, token: String) ' Construtor para new/init
+    + isValid(): Boolean
+    + prolongarSessao(): void
+}
+
+class SimulacaoController {
+    + solicitarSimulacao(dadosEntrada: Map): Map
+}
+
+class ProgressoController {
+    + solicitarRelatorioProgresso(usuarioId: Integer): RelatorioProgresso
+}
+
+class GeradorRelatorioService {
+    + gerarRelatorioParaUsuario(usuarioId: Integer): RelatorioProgresso
+}
+
+
 Administrador --|> Usuario
 Desafio --|> ConteudoEducacional
 Quiz --|> ConteudoEducacional
@@ -301,7 +388,6 @@ Usuario "0..*" -- "0..*" TermoGlossario : favorita
 Ativo "1" *-- "0..*" Preco : historico
 Quiz "1" *-- "1..*" Pergunta
 Carteira ..> DadosGrafico : gera
-Usuario "1" *-- "1" RelatorioProgresso
 Simulacao ..> ResultadoSimulacao : gera
 Simulacao ..> SugestaoAlocacao : gera
 Ranking "1" *-- "0..*" EntradaRanking
@@ -313,12 +399,48 @@ Carteira "1" *-- "0..*" Transacao
 Transacao "0..*" --> "1" Ativo
 
 Simulacao "0..*" --> "1" Usuario : realizada por
-Quiz "1" *-- "1..*" Pergunta
-Ranking "1" -- "0..*" Usuario : lista
-Ranking "1" -- "0..*" EntradaRanking : contém
-EntradaRanking "1" --> "1" Usuario
 
 Administrador --> Noticia : gerencia
 Administrador --> TermoGlossario : gerencia
+
+DesafioController ..> Desafio : gerenciaOuUsa
+DesafioController ..> ProgressoService : utiliza
+DesafioController ..> RecompensaService : utiliza
+
+QuizController ..> Quiz : gerenciaOuUsa
+QuizController ..> ProgressoService : utiliza
+QuizController ..> RecompensaService : utiliza
+
+AtivoController ..> Carteira : gerencia
+AtivoController ..> Ativo : consulta
+AtivoController ..> Perfil : consulta
+AtivoController ..> Transacao : registra
+
+PerfilController ..> Questionario : usa
+PerfilController ..> Perfil : atualiza
+
+NoticiaController ..> Noticia : gerenciaOuUsa
+
+PedidoController ..> Convite : gerencia
+PedidoController ..> AmizadeService : utiliza
+
+AmizadeService ..> Usuario : gerenciaAmigos
+
+AuthController ..> Usuario : autenticaECria
+AuthController ..> SessaoUsuario : gerencia
+
+SimulacaoController ..> Simulacao : coordena
+SimulacaoController ..> ServicoBrapi : consulta ' Assumindo ServicoBrapi é um participante externo não modelado aqui
+
+ProgressoController ..> GeradorRelatorioService : solicita
+ProgressoController ..> Usuario : associaRelatorio
+GeradorRelatorioService ..> RelatorioProgresso : gera
+GeradorRelatorioService ..> ProgressoService : consulta
+GeradorRelatorioService ..> Simulacao : consulta
+
+ProgressoService ..> Usuario : atualizaProgresso
+RecompensaService ..> Usuario : premiaUsuario
+RecompensaService ..> Conquista : concedeConquista
+RecompensaService ..> Carteira : creditaValor
 
 @enduml

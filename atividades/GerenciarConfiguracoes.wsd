@@ -1,48 +1,41 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Gerenciar Configurações
+title Gerenciar Configurações (Loops Corrigidos)
 
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
-if(Mudar de Tema?) then (Sim)
-    repeat
+if (Usuário deseja Mudar Tema?) then (Sim)
     |Usuário|
-    :Seleciona Tema;
-    repeat while (Tema Selecionado?) is (Não) not (Sim)
-    |Sistema|
-    :Atualiza Tema Atual para o Pedido;
-else (Não)
-endif
-if(Mudar Velocidade?) then (Sim)
     repeat
+        :Seleciona o Tema desejado (Claro, Escuro, etc.);
+    |Sistema|
+        :Sistema registra a seleção provisória do tema;
+    repeat while (Um Tema foi Efetivamente Selecionado?) is (Não)
+    :Atualiza Configuração de Tema do Aplicativo;
+else (Não)
+endif
+
+if (Usuário deseja Mudar Velocidade de Animações/Leitura?) then (Sim)
     |Usuário|
-    :Seleciona Velocidade;
-    repeat while (Tema Selecionado?) is (Não) not (Sim)
+    repeat
+        :Seleciona a Velocidade desejada (Lenta, Normal, Rápida);
     |Sistema|
-    :Atualiza Velocidade Atual para a Pedida;
+        :Sistema registra a seleção provisória da velocidade;
+    repeat while (Uma Velocidade foi Efetivamente Selecionada?) is (Não)
+    :Atualiza Configuração de Velocidade do Aplicativo;
 else (Não)
 endif
-if(Desativar/Ativar Som?) then (Sim)
+
+if (Usuário deseja Desativar/Ativar Som?) then (Sim)
     |Sistema|
-    :Atualiza o Som Sendo o Contrário ao Estado Atual;
+    :Inverte o Estado Atual da Configuração de Som (Liga/Desliga);
 else (Não)
 endif
-if(Desativar/Ativar Notificações?) then (Sim)
+
+if (Usuário deseja Desativar/Ativar Notificações?) then (Sim)
     |Sistema|
-    :Atualiza as Notificações Sendo o Contrário ao Estado Atual;
+    :Inverte o Estado Atual da Configuração de Notificações (Liga/Desliga);
 else (Não)
 endif
 stop

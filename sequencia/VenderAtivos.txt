@@ -1,0 +1,51 @@
+Explicação do Diagrama de Sequência: Vender Ativo
+
+Este diagrama de sequência descreve o processo de venda de um ativo por um usuário no aplicativo Blue Bee. Ele detalha a ordem das mensagens trocadas entre o usuário, a interface, os componentes de controle do sistema e os objetos de dados da carteira.
+
+**Participantes (As Colunas Verticais no Diagrama):**
+
+* **:Usuario (User)**: O ator que inicia a ação de vender um ativo.
+* **:TelaAtivos (Tela)**: Representa a interface gráfica onde o usuário gerencia seus ativos e inicia a venda.
+* **:AtivoController (Controller)**: O componente lógico que coordena o processo de venda, validando as informações e orquestrando as atualizações.
+* **:Carteira (Carteira / objCarteiraUsuario)**: Representa a carteira de investimentos do usuário, de onde o ativo será vendido e onde o saldo será creditado.
+* **:Ativo (AtivoToSell)**: Representa o ativo específico que está sendo vendido, usado aqui para consultar seu preço atual.
+* **:AtivoCarteira (ItemCarteira)**: A classe de ligação que mantém a quantidade de um ativo específico dentro da carteira do usuário.
+* **:Transacao (RegTransacao)**: Objeto criado para registrar os detalhes da operação de venda.
+
+**Fluxo Detalhado das Interações:**
+
+1.  **Início da Operação:**
+    * O `:Usuario` acessa a tela de "Meus Ativos" (ou uma tela similar de gerenciamento). A `:TelaAtivos` é ativada.
+    * O `:Usuario` seleciona o ativo que deseja vender, informa a quantidade e clica em "Confirmar Venda".
+
+2.  **Processamento da Solicitação de Venda:**
+    * A `:TelaAtivos` envia uma mensagem `solicitarVendaAtivo` para o `:AtivoController`, passando os detalhes da venda. O `Controller` é ativado.
+    * O `Controller` primeiro obtém o objeto `:Carteira` associado ao usuário.
+
+3.  **Verificação de Quantidade:**
+    * O `Controller` solicita à `objCarteiraUsuario` (a instância da carteira do usuário) que verifique se a `quantidadeDisponivel` do ativo para venda é suficiente.
+    * A `objCarteiraUsuario` (internamente, consultando o `ItemCarteira` correspondente) retorna se a quantidade está OK.
+
+4.  **Fluxo Condicional Baseado na Disponibilidade (Bloco `alt`):**
+
+    * **Caminho "Quantidade Disponível para Venda" (#LightGreen):**
+        * O `Controller` busca o `precoAtual` do `:AtivoToSell`.
+        * O `Controller` pede à `objCarteiraUsuario` para `calcularValorTotalVenda` com base no preço e quantidade.
+        * O `Controller` instrui a `objCarteiraUsuario` a `efetuarVendaAtivo`.
+        * Dentro da `objCarteiraUsuario`:
+            * A quantidade do ativo é diminuída (ou o item é removido) no `ItemCarteira` correspondente.
+            * Um novo objeto `:Transacao` (com o nome `RegTransacao`) é criado (`create participant`) para registrar os detalhes da venda.
+            * O `valorTotalCalculado` da venda é adicionado ao saldo da `objCarteiraUsuario`.
+        * A `objCarteiraUsuario` confirma a `vendaConfirmada` ao `Controller`.
+        * O `Controller` notifica a `Tela` sobre o sucesso da venda.
+        * A `Tela` exibe uma mensagem de "Venda realizada com sucesso!" ao `Usuario`.
+
+    * **Caminho `else` "Quantidade Indisponível" (#LightCoral):**
+        * Se a quantidade informada não estiver disponível para venda, o `Controller` envia uma mensagem `erroQuantidadeInsuficiente` para a `Tela`.
+        * A `Tela` exibe a mensagem de erro correspondente ao `Usuario`.
+
+5.  **Finalização:**
+    * Ao final de cada um dos caminhos (sucesso ou erro na disponibilidade), o `:AtivoController` e a `:TelaAtivos` são desativados, concluindo suas participações no fluxo de venda.
+
+**Conclusão do Diagrama:**
+Este diagrama demonstra o processo de venda de ativos, incluindo a verificação de posse da quantidade a ser vendida, a obtenção do preço de mercado para cálculo, a atualização da carteira do usuário, o registro da transação e a comunicação do resultado da operação ao usuário.

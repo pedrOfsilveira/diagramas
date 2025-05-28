@@ -1,0 +1,97 @@
+@startuml
+
+title Diagrama de Sequência: Comprar Ativo
+
+actor ":Usuario" as User
+participant ":TelaAtivos" as Tela
+participant ":AtivoController" as Controller
+participant ":Perfil" as PerfilObj
+participant ":Carteira" as CarteiraObj
+participant ":Ativo" as AtivoObj
+participant ":AtivoCarteira" as ItemCarteira
+
+User -> Tela: Inicia Compra
+activate Tela
+
+User -> Tela: Escolhe Ativo e Quantidade
+User -> Tela: Clica "Confirmar"
+
+Tela -> Controller: comprarAtivo(idU, idA, Qtd)
+activate Controller
+
+Controller -> AtivoObj: getDetalhes()
+activate AtivoObj
+AtivoObj --> Controller: dadosAtivo
+deactivate AtivoObj
+
+Controller -> PerfilObj: getEstiloInvestidor()
+activate PerfilObj
+PerfilObj --> Controller: estiloInvestidor
+deactivate PerfilObj
+
+Controller -> AtivoObj: verificarCompatibilidade(estiloInvestidor)
+activate AtivoObj
+AtivoObj --> Controller: ehCompativel
+deactivate AtivoObj
+
+alt naoEhCompativel
+
+    Controller --> Tela: PedirConfirmacaoIncompatibilidade()
+    Tela --> User: "Ativo fora do perfil. Continuar?"
+    User -> Tela: Resposta(confirmou)
+
+    alt NaoConfirmouCompra
+        Tela --> Controller: compraCanceladaPeloUsuario()
+        Controller --> Tela: Mensagem("Compra cancelada.")
+        Tela --> User: Exibe "Compra cancelada."
+        deactivate Controller
+        deactivate Tela
+    else ConfirmouCompraAposAviso
+    end
+else ehCompativel
+end
+
+Controller -> CarteiraObj: calcularValorCompra(dadosAtivo.preco, Qtd)
+activate CarteiraObj
+CarteiraObj --> Controller: valorTotal
+deactivate CarteiraObj
+
+Controller -> CarteiraObj: verificarSaldoSuficiente(valorTotal)
+activate CarteiraObj
+CarteiraObj --> Controller: saldoOk
+deactivate CarteiraObj
+
+alt Saldo Suficiente
+
+    Controller -> CarteiraObj: efetuarCompra(idA, Qtd, valorTotal)
+    activate CarteiraObj
+
+    CarteiraObj -> ItemCarteira: adicionarQuantidade(Qtd)
+    activate ItemCarteira
+    ItemCarteira --> CarteiraObj: ok
+    deactivate ItemCarteira
+
+    create participant ":Transacao" as NovaTransacao
+    CarteiraObj -> NovaTransacao: new(COMPRA, idA, Qtd, valorTotal)
+    activate NovaTransacao
+    NovaTransacao --> CarteiraObj: transacaoCriada
+    deactivate NovaTransacao
+    
+    CarteiraObj -> CarteiraObj: subtrairDoSaldo(valorTotal)
+    CarteiraObj --> Controller: compraRealizada
+    deactivate CarteiraObj
+
+    Controller --> Tela: Mensagem("Compra realizada!")
+    Tela --> User: Exibe "Compra realizada!"
+
+else Saldo Insuficiente
+
+    Controller --> Tela: Mensagem("Saldo insuficiente.")
+    Tela --> User: Exibe "Saldo insuficiente."
+
+end
+
+deactivate Controller
+deactivate Tela
+
+@enduml

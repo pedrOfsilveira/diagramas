@@ -1,0 +1,43 @@
+@startuml
+
+title Diagrama de Sequência: Visualizar Relatório de Progresso Educacional
+
+actor ":Usuario" as User
+participant ":TelaRelatorio" as Tela
+participant ":ProgressoController" as Controller
+participant ":GeradorRelatorioService" as GeradorServ
+participant ":RelatorioProgresso" as RelatorioObj
+
+User -> Tela: Acessa "Relatório de Progresso"
+activate Tela
+
+Tela -> Controller: solicitarRelatorioProgresso(usuarioId)
+activate Controller
+
+Controller -> GeradorServ: gerarRelatorioParaUsuario(usuarioId)
+activate GeradorServ
+
+' O GeradorServ internamente coleta dados de várias fontes:
+' - Tópicos aprendidos (de Quizzes, Desafios)
+' - Número de simulações realizadas
+' - Erros mais comuns
+' - Tempo total investido no app
+' - Gera sugestões de melhoria
+' Esta lógica complexa é encapsulada pelo GeradorServ.
+
+create participant ":RelatorioProgresso" as RelatorioObj
+GeradorServ -> RelatorioObj: new(dadosCompiladosDoRelatorio)
+activate RelatorioObj
+RelatorioObj --> GeradorServ: relatorioPronto
+deactivate RelatorioObj
+
+GeradorServ --> Controller: relatorioCompleto
+deactivate GeradorServ
+
+Controller --> Tela: exibirRelatorio(relatorioCompleto)
+deactivate Controller
+
+Tela --> User: Mostra Relatório Detalhado de Progresso
+deactivate Tela
+
+@enduml

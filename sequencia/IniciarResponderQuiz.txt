@@ -1,0 +1,52 @@
+Explicação do Diagrama de Sequência: Iniciar e Responder Quiz
+
+Este diagrama de sequência descreve o fluxo de interações quando um usuário participa de um quiz no aplicativo Blue Bee. Ele detalha como as perguntas são apresentadas, as respostas processadas, a experiência do usuário atualizada, e como os resultados finais, incluindo possíveis recompensas, são gerenciados e exibidos.
+
+**Participantes (As Colunas Verticais no Diagrama):**
+
+* **:Usuario (User)**: O ator que inicia a interação e responde ao quiz.
+* **:TelaQuiz (Tela)**: Representa a interface gráfica (a tela do quiz) através da qual o usuário visualiza as perguntas e submete suas respostas.
+* **:QuizController (Controller)**: O componente lógico central que gerencia todo o fluxo do quiz. Ele busca os quizzes, valida as respostas, interage com outros serviços e coordena a apresentação na tela.
+* **:Quiz (QuizObj)**: Representa o objeto do quiz específico que o usuário está respondendo. Ele contém as perguntas e a lógica para verificar as respostas.
+* **:ProgressoService (ProgServ)**: Um serviço dedicado a registrar e atualizar o progresso de aprendizado e a pontuação de experiência do usuário.
+* **:RecompensaService (RecompServ)**: Um serviço responsável por determinar e conceder recompensas ao usuário com base no seu desempenho no quiz.
+
+**Fluxo Detalhado das Interações:**
+
+1.  **Acesso e Seleção do Quiz:**
+    * O `:Usuario` acessa a área de quizzes através da `:TelaQuiz`. A `:TelaQuiz` é ativada.
+    * A `:TelaQuiz` solicita ao `:QuizController` que carregue os quizzes disponíveis. O `Controller` é ativado.
+    * O `Controller` retorna a `listaQuizzes` para a `Tela`. O `Controller` é desativado.
+    * O `:Usuario` seleciona um quiz da lista apresentada na `:TelaQuiz`.
+    * A `Tela` informa ao `Controller` qual quiz foi selecionado para ser iniciado (`iniciarQuiz`). O `Controller` é ativado novamente.
+
+2.  **Início e Carregamento das Perguntas:**
+    * O `:QuizController` solicita ao objeto `:QuizObj` (representando o quiz escolhido) a sua `listaDePerguntas`. O `:QuizObj` é ativado.
+    * O `:QuizObj` retorna a lista de perguntas ao `Controller`. O `:QuizObj` é desativado.
+    * O `Controller` envia a primeira pergunta (`exibirPrimeiraPergunta`) para a `:TelaQuiz`. O `Controller` permanece ativo, pois está gerenciando o estado do quiz.
+
+3.  **Loop de Respostas às Perguntas (Bloco `loop`):**
+    * Este bloco se repete para cada pergunta presente na `listaDePerguntas`.
+    * A `:TelaQuiz` exibe a pergunta atual e suas alternativas para o `:Usuario`.
+    * O `:Usuario` seleciona uma alternativa (sua `respostaUsuario`).
+    * A `Tela` envia a `respostaUsuario` (juntamente com os identificadores necessários) para o `:QuizController` (`submeterResposta`).
+    * O `Controller` pede ao `:QuizObj` para `verificarResposta`. O `:QuizObj` é ativado.
+    * O `:QuizObj` valida a resposta e retorna ao `Controller` se ela está `ehCorreta`. O `:QuizObj` é desativado.
+    * **Bloco `alt ehCorreta / naoEhCorreta` (Tratamento da Resposta):**
+        * **Caminho "ehCorreta":** Se a resposta estiver correta, o `Controller` solicita ao `:ProgressoService` para `adicionarExperiencia` ao usuário, passando o tema da questão e os pontos positivos. O `:ProgServ` processa e confirma.
+        * **Caminho `else naoEhCorreta`**: Se a resposta estiver incorreta, o `Controller` solicita ao `:ProgressoService` para `adicionarExperiencia` (possivelmente com uma pontuação menor ou diferente). O `:ProgServ` processa e confirma.
+    * O `Controller` envia um feedback sobre a resposta (`feedbackRespostaEProxima`) para a `Tela`, que pode incluir a informação se a resposta foi correta e dados sobre a próxima pergunta (ou um indicativo de que o quiz terminou).
+
+4.  **Finalização do Quiz (Após o `loop`):**
+    * O `:QuizController` (que permaneceu ativo) agora processa o final do quiz.
+    * Ele solicita ao `:QuizObj` para `calcularResultadoFinal` (como total de acertos e percentual). O `:QuizObj` é ativado e retorna o resultado. O `:QuizObj` é desativado.
+    * O `Controller` envia esses resultados para o `:ProgressoService` para `atualizarEstatisticasQuiz` do usuário. O `:ProgServ` é ativado e confirma.
+    * O `Controller` então chama o `:RecompensaService` para `concederRecompensa` com base no desempenho do usuário. O `:RecompServ` é ativado, processa a recompensa (que pode ser saldo ou um ativo virtual) e confirma.
+    * O `Controller` envia o `resultadoFinal` completo e a `recompensaConcedida` para a `:TelaQuiz`. O `Controller` é desativado.
+
+5.  **Exibição do Resultado Final:**
+    * A `:TelaQuiz` exibe o resultado final consolidado e qualquer recompensa que o `:Usuario` tenha ganhado.
+    * A `:TelaQuiz` é desativada, concluindo o fluxo do quiz.
+
+**Conclusão do Diagrama:**
+Este diagrama de sequência ilustra a dinâmica da funcionalidade de quiz no Blue Bee, desde a seleção e resposta até a avaliação final e premiação. Ele demonstra como diferentes componentes do sistema (interface, controlador, objetos de quiz, serviços de progresso e recompensa) colaboram para oferecer uma experiência de aprendizado interativa e gamificada ao usuário, seguindo estritamente a sintaxe PlantUML conforme o guia de referência.

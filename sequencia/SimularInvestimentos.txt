@@ -1,0 +1,43 @@
+Explicação do Diagrama de Sequência: Simular Investimentos
+
+Este diagrama de sequência descreve o processo passo a passo de como um usuário realiza uma simulação de investimentos no aplicativo Blue Bee. Ele mostra as interações entre o usuário, a interface do aplicativo, os componentes de controle, serviços externos (como a API Brapi) e os objetos de dados envolvidos.
+
+**Participantes (As Colunas Verticais no Diagrama):**
+
+* **:Usuario (User)**: O ator que inicia e interage com a funcionalidade de simulação.
+* **:TelaSimulacao (Tela)**: Representa a interface gráfica (a tela da calculadora de investimentos) onde o usuário insere os dados.
+* **:SimulacaoController (Controller)**: O componente lógico que coordena o processo de simulação, valida os dados e interage com outros serviços e objetos.
+* **:ServicoBrapi (Brapi)**: Representa um serviço externo (API Brapi) consultado para obter taxas e valores de mercado necessários para a simulação.
+* **:Simulacao (SimulacaoObj)**: Um objeto que pode encapsular a lógica específica de cálculo da projeção do investimento.
+* **:DadosGrafico (Grafico)**: Um objeto criado para armazenar e formatar os dados que serão usados para exibir um gráfico da simulação ao usuário.
+
+**Fluxo Detalhado das Interações:**
+
+1.  **Acesso à Funcionalidade:**
+    * O `:Usuario` acessa a `:TelaSimulacao` (Calculadora de Investimentos). A tela é ativada para interação.
+
+2.  **Entrada de Dados pelo Usuário:**
+    * O `:Usuario` preenche os campos necessários na tela: Investimento Inicial, Aporte Mensal, Período de Aplicação, Tipo de Investimento e o Indexador (Pré-fixado, Pós-fixado, IPCA).
+    * Após preencher todos os dados, o `:Usuario` clica no botão "Simular".
+
+3.  **Solicitação de Simulação ao Controlador:**
+    * A `:TelaSimulacao` envia uma mensagem `solicitarSimulacao` para o `:SimulacaoController`, passando os `dadosEntrada` fornecidos pelo usuário. O `Controller` é ativado para processar esta requisição.
+
+4.  **Validação e Processamento Condicional (Bloco `alt`):**
+    * O `Controller` realiza uma verificação interna para determinar se todos os "Dados de Entrada [estão] Completos?".
+    * **Caminho "Dados de Entrada Completos?":** (Se a validação for bem-sucedida)
+        * O `Controller` envia uma mensagem `buscarTaxasParaSimulacao` para o `:ServicoBrapi`, requisitando as taxas e valores de mercado atuais relevantes para o tipo de investimento e indexador informados.
+        * O `:ServicoBrapi` processa a requisição (interagindo com sua API externa) e retorna as `taxasRetornadas` ao `Controller`.
+        * O `Controller` então envia os `dadosEntrada` (do usuário) e as `taxasRetornadas` (da Brapi) para o objeto `:SimulacaoObj` através da mensagem `calcularProjecao`, para que este realize o cálculo da projeção do investimento.
+        * Durante o cálculo da projeção pelo `:SimulacaoObj`, um novo objeto `:DadosGrafico` é criado dinamicamente (`create participant`) e inicializado com os dados calculados que formarão o gráfico (mensagem `new`).
+        * O `:DadosGrafico` confirma sua criação ao `:SimulacaoObj`, que por sua vez retorna o `resultadoSimulacao` (contendo o montante final projetado e os dados do gráfico) para o `Controller`.
+        * O `Controller` repassa este `resultadoSimulacao` para a `:TelaSimulacao`.
+        * A `:TelaSimulacao` exibe o gráfico e os resultados numéricos da simulação para o `:Usuario`.
+        * A interação da tela e do controlador para este fluxo bem-sucedido é concluída, e eles são desativados.
+    * **Caminho `else` "Dados Incompletos":** (Se a validação falhar)
+        * O `Controller` envia uma mensagem de erro (`erroDadosIncompletos`) para a `:TelaSimulacao`, informando que faltam campos a serem preenchidos.
+        * A `:TelaSimulacao` exibe a mensagem de erro para o `:Usuario`.
+        * O `Controller` é desativado para esta tentativa. A `:TelaSimulacao` permanece ativa, permitindo que o usuário corrija as informações e tente simular novamente.
+
+**Conclusão do Diagrama:**
+Este diagrama visualiza a sequência de operações e a colaboração entre diferentes componentes do sistema para a funcionalidade de simulação de investimentos. Ele destaca a importância da validação de dados de entrada, a consulta a um serviço externo para obtenção de taxas de mercado, o processo de cálculo da simulação, a criação dinâmica de um objeto para a visualização de dados gráficos e o tratamento de fluxos alternativos com base na completude dos dados fornecidos pelo usuário.

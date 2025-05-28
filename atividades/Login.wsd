@@ -1,13 +1,19 @@
 @startuml
 
-title Login
+title Login (com Autenticação Firebase)
 
 |Usuário|
 start
 repeat
-    :Preencher Usuário e Senha;
-    |Sistema|
-repeat while(Usuário e Senha Corretos?) is (Não) not (Sim)
+    :Preencher Email e Senha;
+|Sistema|
+    :Solicitar Autenticação ao Firebase(Email, Senha);
+    note right
+        Sistema interage com
+        o serviço Firebase
+        para validar as credenciais.
+    end note
+repeat while (Firebase autenticou com sucesso?) is (Não) not (Sim)
 stop
 
 @enduml

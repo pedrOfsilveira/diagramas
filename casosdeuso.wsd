@@ -1,41 +1,62 @@
 @startuml
 left to right direction
-:Usuario:
+
+actor ":Usuario:" as User
+actor ":Administrador:" as Admin
+actor ":Serviço Firebase Auth:" as ServicoFirebaseAuth <<Serviço Externo>>
+actor ":Serviço UOL Notícias:" as ServicoUolApi <<Serviço Externo>>
+actor ":Serviço Brapi Dados:" as ServicoBrapiApi <<Serviço Externo>>
+
+Admin --|> User
 
 rectangle "Blue Bee App" {
-    usecase "Iniciar Tutorial" as IniciarTutorial
-    usecase "Ver Perfil" as VerPerfil
-    usecase "Exibir Notícias e Eventos do Mercado" as ExibirNoticiasEventos
-    usecase "Exibir Feedback Personalizado" as ExibirFeedback
-    usecase "Gerenciar Ativos" as GerenciarAtivos
-    usecase "Simular Investimentos" as SimularInvestimentos
-    usecase "Completar Desafios" as CompletarDesafios
-    usecase "Iniciar Quiz" as IniciarQuiz
-    usecase "Ver Glossário" as VerGlossario
-    usecase "Gerenciar Configurações" as GerenciarConfiguracoes
-    usecase "Gerenciar Amigos" as GerenciarAmigos
-    usecase "Gerenciar Pedidos" as GerenciarPedidos
+    usecase "Autenticar Usuário" as UC_Auth
+    usecase "Iniciar Tutorial" as UC_Tutorial
+    usecase "Ver Perfil" as UC_VerPerfil
+    usecase "Exibir Notícias e Eventos do Mercado" as UC_ExibirNoticias
+    usecase "Exibir Feedback Personalizado" as UC_ExibirFeedback
+    usecase "Gerenciar Ativos da Carteira" as UC_GerenciarAtivosCarteira
+    usecase "Simular Investimentos" as UC_SimularInvestimentos
+    usecase "Completar Desafios" as UC_CompletarDesafios
+    usecase "Iniciar Quiz" as UC_IniciarQuiz
+    usecase "Ver Glossário" as UC_VerGlossario
+    usecase "Gerenciar Configurações do App" as UC_GerenciarConfigApp
+    usecase "Gerenciar Amigos" as UC_GerenciarAmigos
+    usecase "Gerenciar Pedidos de Amizade" as UC_GerenciarPedidosAmizade
+
+    usecase "Gerenciar Conteúdo Educacional" as UC_AdminConteudo
+    usecase "Gerenciar Notícias do Mercado" as UC_AdminNoticias
+    usecase "Gerenciar Termos do Glossário" as UC_AdminGlossario
+    usecase "Moderar Interações de Usuários" as UC_AdminModeracao
+    usecase "Monitorar Funcionamento do Sistema" as UC_AdminMonitorar
+    usecase "Gerenciar Usuários" as UC_AdminGerenciarUsuarios
 }
 
-:Uol:
-:Brapi:
+User -- UC_Auth
+User -- UC_Tutorial
+User -- UC_VerPerfil
+User -- UC_ExibirNoticias
+User -- UC_ExibirFeedback
+User -- UC_GerenciarAtivosCarteira
+User -- UC_SimularInvestimentos
+User -- UC_CompletarDesafios
+User -- UC_IniciarQuiz
+User -- UC_VerGlossario
+User -- UC_GerenciarConfigApp
+User -- UC_GerenciarAmigos
+User -- UC_GerenciarPedidosAmizade
 
-Usuario -- IniciarTutorial
-Usuario --> VerPerfil
-Usuario --> ExibirNoticiasEventos
-Usuario --> ExibirFeedback
-Usuario --> GerenciarAtivos
-Usuario --> SimularInvestimentos
-Usuario --> CompletarDesafios
-Usuario --> IniciarQuiz
-Usuario --> VerGlossario
-Usuario --> GerenciarConfiguracoes
-Usuario --> GerenciarAmigos
-Usuario --> GerenciarPedidos
+Admin -- UC_AdminConteudo
+Admin -- UC_AdminNoticias
+Admin -- UC_AdminGlossario
+Admin -- UC_AdminModeracao
+Admin -- UC_AdminMonitorar
+Admin -- UC_AdminGerenciarUsuarios
 
-ExibirNoticiasEventos -- Uol
-
-GerenciarAtivos -- Brapi 
-SimularInvestimentos -- Brapi 
+UC_Auth -- ServicoFirebaseAuth
+UC_ExibirNoticias -- ServicoUolApi
+UC_GerenciarAtivosCarteira -- ServicoBrapiApi
+UC_SimularInvestimentos -- ServicoBrapiApi
+UC_AdminNoticias -- ServicoUolApi
 
 @enduml

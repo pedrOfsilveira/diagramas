@@ -1,0 +1,39 @@
+Explicação do Diagrama de Sequência: Definir Perfil de Investidor
+
+Este diagrama de sequência ilustra o processo pelo qual um usuário do aplicativo Blue Bee define ou atualiza seu perfil de investidor. Ele detalha as interações entre o usuário, a interface do sistema, o controlador de perfil, um objeto de questionário e o objeto de perfil do usuário. O fluxo é baseado no Requisito Funcional RF021.
+
+**Participantes (As Colunas Verticais no Diagrama):**
+
+* **:Usuario (User)**: O ator que interage com o sistema para definir seu perfil.
+* **:TelaPerfilInvestidor (Tela)**: Representa a interface gráfica (a tela) onde o questionário de perfil de investidor é apresentado e respondido.
+* **:PerfilController (Controller)**: O componente lógico responsável por gerenciar o processo de definição do perfil, incluindo a obtenção do questionário, o cálculo do estilo e a atualização do perfil.
+* **:Questionario (QuestionarioObj)**: Representa o questionário em si ou o componente que fornece as perguntas necessárias para definir o perfil.
+* **:Perfil (PerfilObj)**: O objeto que armazena os dados do perfil do usuário, incluindo o estilo de investidor.
+
+**Fluxo Detalhado das Interações:**
+
+1.  **Início da Definição de Perfil:**
+    * O `:Usuario` acessa a funcionalidade "Definir Perfil de Investidor" através da `:TelaPerfilInvestidor`. A `:TelaPerfilInvestidor` é ativada.
+
+2.  **Solicitação e Exibição do Questionário:**
+    * A `:TelaPerfilInvestidor` envia uma mensagem `solicitarQuestionarioPerfil()` para o `:PerfilController`. O `Controller` é ativado.
+    * O `:PerfilController` solicita ao `:QuestionarioObj` as perguntas do questionário (`getPerguntas()`). O `:QuestionarioObj` é ativado, retorna a `listaPerguntas` e é desativado.
+    * O `Controller` envia a `listaPerguntas` para a `:TelaPerfilInvestidor` (`exibirQuestionario`). O `Controller` é desativado temporariamente enquanto o usuário responde.
+
+3.  **Preenchimento e Submissão pelo Usuário:**
+    * A `:TelaPerfilInvestidor` (que foi reativada ou permaneceu ativa) mostra o questionário (perguntas e opções de resposta) para o `:Usuario`.
+    * O `:Usuario` preenche suas respostas e clica em "Finalizar Questionário" (ou um botão similar).
+
+4.  **Processamento das Respostas e Definição do Perfil:**
+    * A `:TelaPerfilInvestidor` envia as `respostas` do questionário para o `:PerfilController` (`submeterRespostasQuestionario`), passando também o ID do usuário. O `Controller` é ativado novamente.
+    * O `:PerfilController` executa uma lógica interna (`calcularEstiloInvestidor`) para processar as `respostas` e determinar o `estiloCalculado` (ex: Conservador, Moderado, Agressivo). Esta é uma auto-mensagem, indicando processamento interno, e tem sua própria barra de ativação.
+    * Após calcular o estilo, o `Controller` envia uma mensagem `atualizarEstilo` para o `:PerfilObj` do usuário, passando o `estiloCalculado`. O `:PerfilObj` é ativado.
+    * O `:PerfilObj` atualiza internamente o estilo de investidor e retorna uma confirmação (`perfilAtualizadoComSucesso`) ao `Controller`. O `:PerfilObj` é desativado.
+
+5.  **Feedback ao Usuário:**
+    * O `:PerfilController` informa à `:TelaPerfilInvestidor` que o `perfilDefinidoComSucesso`, enviando também o `estiloCalculado`. O `Controller` é desativado.
+    * A `:TelaPerfilInvestidor` exibe a classificação do perfil (ex: "Seu perfil é: Conservador") para o `:Usuario`.
+    * A `:TelaPerfilInvestidor` é desativada, concluindo o fluxo.
+
+**Conclusão do Diagrama:**
+Este diagrama de sequência demonstra como o sistema coleta as respostas do usuário a um questionário, processa essas respostas para classificar o perfil de investidor e atualiza as informações do perfil do usuário, fornecendo feedback ao final do processo. Todas as interações seguem a sintaxe PlantUML conforme o guia de referência.

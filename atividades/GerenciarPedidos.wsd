@@ -1,22 +1,11 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Gerenciar Pedidos
+title Gerenciar Pedidos (Rótulos Corrigidos)
 
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
+:Inicia Usuário;
 |Usuário|
 :Seleciona Aceitar ou Recusar Pedido;
 |Sistema|
@@ -24,8 +13,8 @@ if(Pedido Aceito?) then (Sim)
     :Adiciona Amigo a Lista de Amigos;
 else (Não)
 endif
-:Remove Pedido;
-:Lista de Pedidos]
+:Remove Pedido da lista de pendentes;
+:Apresenta Lista de Pedidos atualizada;
 stop
 
 @enduml

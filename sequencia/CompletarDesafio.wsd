@@ -1,0 +1,66 @@
+@startuml
+
+title Diagrama de Sequência: Completar Desafio (Mensagens Ajustadas)
+
+actor ":Usuario" as User
+participant ":TelaDesafios" as Tela
+participant ":DesafioController" as Controller
+participant ":Desafio" as DesafioObj
+participant ":ProgressoService" as ProgServ
+participant ":RecompensaService" as RecompServ
+
+User -> Tela: Acessa área de Desafios
+activate Tela
+
+Tela -> Controller: carregarDesafiosDisponiveis()
+activate Controller
+Controller --> Tela: listaDesafios
+deactivate Controller
+
+User -> Tela: Seleciona um Desafio (desafioId)
+
+Tela -> Controller: iniciarDesafio(usuarioId, desafioId)
+activate Controller
+
+Controller -> DesafioObj: getDetalhes()
+activate DesafioObj
+DesafioObj --> Controller: detalhesDesafio
+deactivate DesafioObj
+
+Controller --> Tela: exibirDesafio(detalhesDesafio)
+
+User -> Tela: Realiza ações / Submete solução do Desafio
+
+Tela -> Controller: submeterSolucaoDesafio(usuarioId, desafioId, solucao)
+
+Controller -> DesafioObj: submeterResultado(usuarioId, solucao)
+activate DesafioObj
+DesafioObj --> Controller: resultadoSolucao (foiConcluido, detalhesFeedback)
+deactivate DesafioObj
+
+alt foiConcluido
+
+    Controller -> ProgServ: marcarDesafioComoConcluido(usuarioId, desafioId)
+    activate ProgServ
+    ProgServ --> Controller: progressoAtualizado
+    deactivate ProgServ
+
+    Controller -> RecompServ: concederRecompensaDesafio(usuarioId, desafioId)
+    activate RecompServ
+    RecompServ --> Controller: infoRecompensa
+    deactivate RecompServ
+    
+    Controller --> Tela: feedbackDesafio(resultadoSolucao.detalhesFeedback, infoRecompensa)
+    Tela --> User: Exibe "Desafio Concluído!", Feedback e Recompensa
+
+else não Foi Concluído ou Tentativa Incorreta
+
+    Controller --> Tela: feedbackDesafio(resultadoSolucao.detalhesFeedback)
+    Tela --> User: Exibe Feedback (ex: "Tente novamente", "Pista adicional")
+
+end
+
+deactivate Controller
+deactivate Tela
+
+@enduml
