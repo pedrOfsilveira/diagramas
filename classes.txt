@@ -1,0 +1,58 @@
+Explicando o Diagrama de Classes do Blue Bee
+
+Prezados membros da banca,
+
+Bom dia/tarde. Hoje, gostaria de apresentar a vocês o Diagrama de Classes do nosso projeto, o Blue Bee. Pensem neste diagrama como a planta baixa ou o blueprint do nosso aplicativo. Ele não mostra as telas que o usuário verá, mas sim os "blocos de construção" internos do sistema e como eles se organizam e se conectam para fazer tudo funcionar.
+
+O objetivo deste diagrama é garantir que temos uma estrutura sólida e bem pensada para o Blue Bee, capaz de suportar todas as funcionalidades que propusemos, desde o aprendizado financeiro até a simulação de investimentos.
+
+Vamos explorar as principais áreas deste "mapa":
+
+1. Os Atores Principais: Quem Usa o Sistema?
+
+* Usuario: Esta é a classe mais importante, representando qualquer pessoa que baixa e usa o aplicativo. É aqui que guardamos as informações básicas, como nome, e-mail, e é a partir daqui que o usuário interage com todo o resto.
+* Administrador: Pensem no Administrador como um Usuario com "superpoderes". Ele tem a capacidade de gerenciar o conteúdo do aplicativo, como notícias e termos do glossário, garantindo que tudo funcione bem para os usuários. A linha com a seta (--|>) indica que o Administrador é um tipo de Usuario.
+
+2. O Coração do Usuário: Perfil e Carteira
+
+* Perfil: Cada Usuario tem seu próprio Perfil. É aqui que definimos o "Estilo de Investidor" (conservador, moderado, etc.) através de um questionário e onde o usuário pode ver e alterar seus dados. A linha com o losango preto (*--) mostra que um Usuario possui um Perfil, e um Perfil não existe sem um Usuario.
+* Carteira: Da mesma forma, cada Usuario possui uma Carteira virtual. É o centro da experiência de investimento, onde o usuário vê seu saldo, seus ativos e a rentabilidade.
+
+3. O Mundo dos Investimentos: Ativos e Transações
+
+* Ativo: Representa os diferentes tipos de investimentos que o usuário pode explorar e "comprar" no aplicativo (ações, fundos, etc.).
+* AtivoCarteira: Esta é uma classe "ponte". Como um Ativo pode estar em várias Carteiras e uma Carteira pode ter vários Ativos, precisamos desta classe para dizer *quantos* de cada Ativo estão *exatamente* em cada Carteira.
+* Transacao: Cada "compra" ou "venda" simulada gera uma Transacao, que fica registrada no histórico da Carteira.
+
+4. Aprendendo a Investir: Conteúdo e Desafios
+
+* ConteudoEducacional: É uma classe "molde" (abstrata). Ela define o que é comum a todo tipo de material de aprendizado.
+* Quiz e Desafio: São tipos específicos de ConteudoEducacional. Eles herdam as características base e implementam as formas interativas de aprendizado, como responder a quizzes ou completar desafios.
+* TermoGlossario: É o nosso dicionário financeiro, onde o usuário pode pesquisar e entender palavras do mercado.
+* RelatorioProgresso: Mostra ao usuário como ele está a evoluir nos seus estudos dentro do app.
+
+5. Interação Social e Gamificação:
+
+* Conquista: Para tornar o aprendizado mais divertido, os usuários podem ganhar Conquistas (medalhas/selos) ao atingirem certos objetivos.
+* Ranking: Uma lista que mostra os usuários com melhor desempenho, incentivando a competição amigável.
+* Convite: Permite que os usuários se conectem e formem uma rede de amigos dentro do aplicativo.
+
+6. Ferramentas e Informações:
+
+* Simulacao: Uma poderosa calculadora onde o usuário pode testar estratégias e ver projeções antes de "investir" na sua carteira virtual.
+* Noticia: Mantém o usuário atualizado com eventos relevantes do mercado.
+
+7. Como as Peças se Encaixam (Os Relacionamentos):
+
+As linhas que vocês veem conectando essas caixas são os relacionamentos. Elas mostram como as diferentes partes do sistema colaboram:
+
+* Linhas com Seta Triangular (--|>): Indicam Herança ("é um tipo de").
+* Linhas com Losango Preto (*--): Indicam Composição ("possui um", e a parte não existe sem o todo).
+* Linhas Simples (-- ou -->): Indicam Associação ("usa", "conhece", "conecta-se a").
+* Números (1, 0..*): Indicam Quantos. Por exemplo, 1 Usuario tem 1 Carteira. 1 Carteira tem 0..* (zero ou muitos) AtivoCarteira.
+
+Conclusão:
+
+Este diagrama demonstra que o Blue Bee foi planeado com uma arquitetura modular e organizada. Cada "caixa" tem sua responsabilidade bem definida, e as conexões entre elas permitem que o aplicativo entregue as funcionalidades de forma coesa e eficiente. Acreditamos que esta estrutura é uma base sólida para o desenvolvimento bem-sucedido do nosso projeto de TCC.
+
+Muito obrigado. Fico à disposição para perguntas.
