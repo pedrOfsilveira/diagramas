@@ -11,15 +11,15 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Exibir Notícias e Eventos do Mercado
+title Buscar Dados da Brapi
 
 |Usuário|
 start
 |Sistema|
 :Inicia Usuário <$rake>;
-:Buscar Dados da Uol <$rake>;
-|Usuário|
-:Noticias e Eventos;
+:Confirma Chave de Acesso;
+:Busca Dados Brapi;
+:Dados]
 stop
 
 @enduml

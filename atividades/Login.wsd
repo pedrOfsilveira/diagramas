@@ -5,6 +5,7 @@ title Login (com Autenticação Firebase)
 |Usuário|
 start
 repeat
+<<<<<<< HEAD
     :Preencher Email e Senha;
 |Sistema|
     :Solicitar Autenticação ao Firebase(Email, Senha);
@@ -14,6 +15,13 @@ repeat
         para validar as credenciais.
     end note
 repeat while (Firebase autenticou com sucesso?) is (Não) not (Sim)
+=======
+    :Preencher Usuário e Senha;
+    |Sistema|
+    :Buscar Dados;
+    :Usuário]
+repeat while(Usuário e Formulário Coincidem?) is (Não) not (Sim)
+>>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
 stop
 
 @enduml

@@ -5,8 +5,13 @@ title Gerenciar Configurações (Loops Corrigidos)
 |Usuário|
 start
 |Sistema|
+<<<<<<< HEAD
 if (Usuário deseja Mudar Tema?) then (Sim)
     |Usuário|
+=======
+:Inicia Usuário <$rake>;
+if(Mudar Velocidade?) then (Sim)
+>>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
     repeat
         :Seleciona o Tema desejado (Claro, Escuro, etc.);
     |Sistema|
@@ -18,14 +23,20 @@ endif
 
 if (Usuário deseja Mudar Velocidade de Animações/Leitura?) then (Sim)
     |Usuário|
+<<<<<<< HEAD
     repeat
         :Seleciona a Velocidade desejada (Lenta, Normal, Rápida);
+=======
+    :Seleciona Velocidade;
+    repeat while (Velocidade Selecionada?) is (Não) not (Sim)
+>>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
     |Sistema|
         :Sistema registra a seleção provisória da velocidade;
     repeat while (Uma Velocidade foi Efetivamente Selecionada?) is (Não)
     :Atualiza Configuração de Velocidade do Aplicativo;
 else (Não)
 endif
+<<<<<<< HEAD
 
 if (Usuário deseja Desativar/Ativar Som?) then (Sim)
     |Sistema|
@@ -38,6 +49,8 @@ if (Usuário deseja Desativar/Ativar Notificações?) then (Sim)
     :Inverte o Estado Atual da Configuração de Notificações (Liga/Desliga);
 else (Não)
 endif
+=======
+>>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
 stop
 
 @enduml

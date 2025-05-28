@@ -38,6 +38,6 @@ if(Apagar conta?) then (Sim)
     :Anonimizar Dados <$rake>;
 else (Não)
 endif
-stop
+end
 
 @enduml

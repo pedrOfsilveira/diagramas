@@ -15,9 +15,6 @@ title Anonimizar Dados
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
-|Usuário|
 :Anonimizar Conta;
 |Sistema|
 :Remove Conta da Lista de Usuários;

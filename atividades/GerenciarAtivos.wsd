@@ -17,13 +17,14 @@ title Gerenciar Ativos
 start
 |Sistema|
 :Inicia Usuário <$rake>;
-:Carrega Dados da Brapi]
+:Buscar Dados da Brapi <$rake>;
 |Usuário|
 :Seleciona comprar ou vender;
 |Sistema|
 if(Selecionou Comprar?) then (Sim)
 |Usuário|
     :Seleciona Quantidade;
+    label space
     |Sistema|
     :Calcula Valor Final da Compra;
     if(Saldo Suficiente?) then (Sim)
