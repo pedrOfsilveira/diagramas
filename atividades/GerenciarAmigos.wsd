@@ -1,50 +1,45 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Gerenciar Amigos
+title Gerenciar Amigos (Revisado)
 
 |Usuário|
 start
+:Acessa a tela "Gerenciar Amigos";
+:Digita termo no campo "Buscar Amigos" (ou deixa em branco);
+:Aciona a busca;
+
 |Sistema|
-:Inicia Usuário <$rake>;
-|Usuário|
-:Preencher Buscar;
-|Sistema|
-if(Buscar Vazio?) then (Não)
-    :Busca Correspondência;
-    if(Existe Correspondência?) then (Sim)
-        :Amigos correspondentes]
-    else (Não)
+if (Campo "Buscar Amigos" está vazio?) then (Sim)
+    :Busca todos os amigos do usuário;
+    :Prepara lista de "Todos os Amigos";
+else (Termo de busca preenchido)
+    :Busca amigos que correspondem ao termo;
+    if (Existem amigos correspondentes?) then (Sim)
+        :Prepara lista de "Amigos Correspondentes";
+    else (Nenhum amigo encontrado)
+        :Prepara lista vazia ou mensagem;
     endif
-else (Sim)
-    :Todos os Amigos]
 endif
+
 |Usuário|
-if(Adicionar Amigo?) then (Sim)
+:Visualiza a Lista de Amigos resultante;
+
+if (Deseja Adicionar um Novo Amigo?) then (Sim)
     |Sistema|
-    :Adicionar Amigos <$rake>;
-else (Não)
-endif
-|Usuário|
-if(Remover Amigo?) then (Sim)
+    :Executa atividade "Adicionar Amigos";
+    :Atualiza Lista de Amigos;
     |Usuário|
-    :Seleciona Amigo que Deseja Remover;
-    |Sistema|
-    :Remove Amigo da Lista de Amigos;
-else (Não)
+    :Visualiza Lista atualizada;
 endif
-|Usuário|
-:Lista de Amigos]
+
+if (Deseja Remover um Amigo?) then (Sim)
+    :Seleciona Amigo e Confirma remoção;
+    |Sistema|
+    :Remove Amigo e Atualiza Lista;
+    |Usuário|
+    :Visualiza Lista atualizada;
+endif
+
 stop
 
 @enduml

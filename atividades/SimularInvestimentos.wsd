@@ -1,21 +1,15 @@
 @startuml
 
-title Simular Investimentos (Fluxo Corrigido)
+title Simular Investimentos (Otimizado)
 
 |Usuário|
 start
+:Acessa a Calculadora de Investimentos;
 repeat
     :Preencher Investimento Inicial;
     :Preencher Aporte Mensal;
     :Preencher Período de Aplicação;
     :Selecionar Tipo de Investimento;
-    note right
-        Exemplos de Tipos:
-        CDB/LC/Títulos públicos/Debêntures
-        LCI/LCA
-        Tesouro
-    end note
-<<<<<<< HEAD
     :Selecionar Indexador (Pré, Pós Fixado ou IPCA);
     :Confirma o preenchimento dos dados (ex: Clica "Simular");
 |Sistema|
@@ -26,13 +20,6 @@ repeat while (Todas as Informações Foram Preenchidas?) is (Não)
 :Calcula Montante Final e a Projeção do Investimento;
 |Usuário|
 :Visualiza Resultado da Simulação (Gráfico e Valores);
-=======
-    :Selecionar Pré, Pós Fixado ou IPCA;
-    |Sistema|
-repeat while(Todas Informações Foram Preenchidas?) is (Não) not (Sim)
-:Buscar Dados da Brapi]
-:Calcula Montante Final;
->>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
 stop
 
 @enduml

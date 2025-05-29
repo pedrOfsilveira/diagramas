@@ -1,25 +1,19 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
+title Sistema Busca Dados da Brapi
 
-title Buscar Dados da Brapi
-
-|Usuário|
-start
 |Sistema|
-:Inicia Usuário <$rake>;
-:Confirma Chave de Acesso;
-:Busca Dados Brapi;
-:Dados]
+start
+:Verificar/Obter Chave de Acesso para API Brapi;
+if (Chave de Acesso Válida?) then (Sim)
+    :Conectar à API da Brapi;
+    :Requisitar Dados de Ativos/Mercado;
+    :Receber Dados da Brapi;
+    :Processar/Armazenar Dados Recebidos;
+    :Sinalizar que novos dados de mercado estão disponíveis;
+else (Não)
+    :Registrar falha na obtenção da chave/acesso;
+endif
 stop
 
 @enduml

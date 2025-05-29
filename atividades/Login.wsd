@@ -1,27 +1,17 @@
 @startuml
 
-title Login (com Autenticação Firebase)
+title Login com Autenticação Firebase (Revisado)
 
 |Usuário|
 start
 repeat
-<<<<<<< HEAD
-    :Preencher Email e Senha;
+    :Preencher Email e Senha na tela de login;
+    :Clica no botão "Entrar";
 |Sistema|
-    :Solicitar Autenticação ao Firebase(Email, Senha);
-    note right
-        Sistema interage com
-        o serviço Firebase
-        para validar as credenciais.
-    end note
-repeat while (Firebase autenticou com sucesso?) is (Não) not (Sim)
-=======
-    :Preencher Usuário e Senha;
-    |Sistema|
-    :Buscar Dados;
-    :Usuário]
-repeat while(Usuário e Formulário Coincidem?) is (Não) not (Sim)
->>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
+    :Solicitar Autenticação ao Serviço Firebase (com Email e Senha fornecidos);
+repeat while (Firebase autenticou com sucesso?) is (Não)
+
+:Direcionar usuário para a tela principal do aplicativo (Dashboard);
 stop
 
 @enduml

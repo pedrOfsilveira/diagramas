@@ -6,7 +6,7 @@ title Exibir Ranking de Investidores (RF025)
 start
 :Acessa a seção "Ranking de Investidores";
 |Sistema|
-:Sistema carrega e processa os dados para o ranking;
+:Carrega e processa os dados para o ranking;
 :Prepara a lista dos melhores investidores para exibição;
 |Usuário|
 :Visualiza o Ranking de Investidores;

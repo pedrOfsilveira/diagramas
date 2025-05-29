@@ -1,43 +1,55 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Ver Perfil
+title Ver Perfil e Gerenciar Conta (Otimizado)
 
 |Usuário|
 start
+:Acessa a tela "Meu Perfil";
 |Sistema|
-:Inicia Usuário <$rake>;
+:Carrega Dados do Perfil do Usuário;
+:Carrega Estatísticas de Investimentos do Usuário;
+:Carrega Estatísticas do Progresso em Quiz do Usuário;
 |Usuário|
-:Dados do Perfil]
-:Estatísticas dos Investimentos]
-:Estatísticas do Progresso em Quiz]
-if(Editar Dados?) then (Sim)
-    :Preencher Nome;
-    :Preencher Gênero;
-    :Preencher Data de Nascimento;
-    :Preencher Email;
-    :Preencher Senha;
-    :Preencher Confirmar Senha;
+:Visualiza Dados do Perfil;
+:Visualiza Estatísticas dos Investimentos;
+:Visualiza Estatísticas do Progresso em Quiz;
+
+if (Usuário decide Editar Dados?) then (Sim)
+    :Preenche/Altera Nome;
+    :Preenche/Altera Gênero;
+    :Preenche/Altera Data de Nascimento;
+    :Preenche/Altera Email;
+    :Preenche Nova Senha (opcionalmente);
+    :Confirma Nova Senha (se alterada);
+    :Clica em "Salvar Alterações";
     |Sistema|
-    :Usuário]
+    if (Dados válidos e senhas (se alteradas) coincidem?) then (Sim)
+        :Atualiza os Dados do Perfil do Usuário no sistema;
+        |Usuário|
+        :Visualiza mensagem "Dados atualizados com sucesso";
+        :Visualiza Perfil com dados atualizados;
+    else (Não - Dados inválidos)
+        |Usuário|
+        :Visualiza mensagem de erro (ex: "Senhas não coincidem");
+    endif
 else (Não)
 endif
+
 |Usuário|
-if(Apagar conta?) then (Sim)
-    |Sistema|
-    :Anonimizar Dados <$rake>;
+if (Usuário decide Apagar Conta?) then (Sim)
+    :Confirma a intenção de apagar a conta (ex: através de um modal);
+    if (Confirmou apagar?) then (Sim)
+        |Sistema|
+        :Executar Atividade "Anonimizar Dados";
+        ' Após a anonimização, o usuário normalmente seria deslogado
+        :Deslogar usuário;
+        |Usuário|
+        :É direcionado para a tela de login/inicial;
+        stop
+    else (Não)
+    endif
 else (Não)
 endif
-end
+stop
 
 @enduml

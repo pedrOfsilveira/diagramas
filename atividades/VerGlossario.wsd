@@ -1,25 +1,26 @@
 @startuml
 
-title Ver Glossário (Rótulos Corrigidos)
+title Ver Glossário (Otimizado)
 
 |Usuário|
 start
+:Acessa a seção "Glossário";
+:Digita um termo no campo "Buscar" (ou deixa em branco para ver todos);
+:Aciona a busca/visualização;
 |Sistema|
-:Inicia Usuário;
-|Usuário|
-:Preencher Buscar;
-|Sistema|
-if(Buscar Vazio?) then (Não)
-    :Busca Correspondência;
-    if(Existe Correspondência?) then (Sim)
-        :Palavras correspondentes;
+if (Campo "Buscar" está vazio?) then (Sim)
+    :Sistema recupera todos os termos do glossário;
+    :Prepara a lista de "Todos os Termos" para exibição;
+else (Não - Termo de busca preenchido)
+    :Sistema busca termos no glossário que correspondem ao termo digitado;
+    if (Existem termos correspondentes?) then (Sim)
+        :Prepara lista de "Termos Correspondentes" para exibição;
     else (Não)
+        :Prepara mensagem "Nenhum termo encontrado para a busca";
     endif
-else (Sim)
-    :Todas as Palavras;
 endif
 |Usuário|
-:Lista de Palavras;
+:Visualiza a Lista de Termos do Glossário (ou mensagem);
 stop
 
 @enduml

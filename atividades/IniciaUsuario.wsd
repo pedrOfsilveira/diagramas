@@ -1,29 +1,27 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
+title Inicia Usuário e Carrega Dados (Otimizado)
 
-title Inicia Usuário
-
-|Usuário|
-start
 |Sistema|
-if(Usuário está logado?) then (Não)
+start
+:Verifica o estado de autenticação do usuário;
+if (Usuário NÃO está logado?) then (Sim)
     |Usuário|
-    :Fazer Login <$rake>;
+    :É direcionado para a tela de Login;
     |Sistema|
-else (Sim)
+    :Executar Atividade "Login (com Autenticação Firebase)";
+
+    if (Login NÃO foi bem-sucedido?) then (Sim)
+        stop 
+    endif
+else (Não - Usuário JÁ está logado)
 endif
-:Buscar Dados;
-:Usuário]
+
+|Sistema|
+:Buscar dados essenciais do usuário (Perfil, Carteira, etc.);
+:Preparar dados para exibição na tela inicial/principal;
+|Usuário|
+:Visualiza a tela principal/inicial com seus dados carregados;
 stop
 
 @enduml

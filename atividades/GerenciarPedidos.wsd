@@ -1,20 +1,32 @@
 @startuml
 
-title Gerenciar Pedidos (Rótulos Corrigidos)
+title Gerenciar Pedidos de Amizade (Otimizado)
 
 |Usuário|
 start
+:Acessa a tela de "Pedidos de Amizade";
 |Sistema|
-:Inicia Usuário;
+:Carrega e exibe os pedidos de amizade pendentes;
 |Usuário|
-:Seleciona Aceitar ou Recusar Pedido;
-|Sistema|
-if(Pedido Aceito?) then (Sim)
-    :Adiciona Amigo a Lista de Amigos;
-else (Não)
+if (Existem pedidos pendentes?) then (Sim)
+    :Seleciona um pedido específico da lista;
+    :Escolhe a ação "Aceitar" ou "Recusar" para o pedido selecionado;
+    |Sistema|
+    if (Ação escolhida é "Aceitar"?) then (Sim)
+        :Adiciona o remetente do pedido à lista de amigos do usuário atual;
+        :Atualiza o status do pedido para "Aceito";
+    else (Não - Ação escolhida é "Recusar")
+        :Atualiza o status do pedido para "Recusado";
+    endif
+    :Remove o pedido processado da lista de pendentes;
+    :Prepara a lista de pedidos atualizada para exibição;
+    |Usuário|
+    :Visualiza a lista de pedidos de amizade atualizada;
+    :Visualiza mensagem de confirmação da ação (aceito/recusado);
+else (Não - Nenhum pedido pendente)
+    |Usuário|
+    :Visualiza mensagem "Nenhum pedido de amizade pendente";
 endif
-:Remove Pedido da lista de pendentes;
-:Apresenta Lista de Pedidos atualizada;
 stop
 
 @enduml

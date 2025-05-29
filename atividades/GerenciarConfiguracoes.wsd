@@ -1,56 +1,53 @@
 @startuml
-
-title Gerenciar Configurações (Loops Corrigidos)
+title Gerenciar Configurações (Otimizado)
 
 |Usuário|
 start
+:Acessa a tela de Configurações;
+
 |Sistema|
-<<<<<<< HEAD
-if (Usuário deseja Mudar Tema?) then (Sim)
+if (Alterar Tema?) then (Sim)
     |Usuário|
-=======
-:Inicia Usuário <$rake>;
-if(Mudar Velocidade?) then (Sim)
->>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
     repeat
-        :Seleciona o Tema desejado (Claro, Escuro, etc.);
+        :Seleciona tema (Claro, Escuro, Auto);
     |Sistema|
-        :Sistema registra a seleção provisória do tema;
-    repeat while (Um Tema foi Efetivamente Selecionado?) is (Não)
-    :Atualiza Configuração de Tema do Aplicativo;
-else (Não)
-endif
-
-if (Usuário deseja Mudar Velocidade de Animações/Leitura?) then (Sim)
+        :Registra seleção temporária;
+    repeat while (Tema válido?) is (Não)
+    :Aplica e salva o tema;
     |Usuário|
-<<<<<<< HEAD
+    :Visualiza tema atualizado;
+endif
+
+|Sistema|
+if (Alterar Velocidade?) then (Sim)
+    |Usuário|
     repeat
-        :Seleciona a Velocidade desejada (Lenta, Normal, Rápida);
-=======
-    :Seleciona Velocidade;
-    repeat while (Velocidade Selecionada?) is (Não) not (Sim)
->>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
+        :Seleciona velocidade (Lenta, Normal, Rápida);
     |Sistema|
-        :Sistema registra a seleção provisória da velocidade;
-    repeat while (Uma Velocidade foi Efetivamente Selecionada?) is (Não)
-    :Atualiza Configuração de Velocidade do Aplicativo;
-else (Não)
-endif
-<<<<<<< HEAD
-
-if (Usuário deseja Desativar/Ativar Som?) then (Sim)
-    |Sistema|
-    :Inverte o Estado Atual da Configuração de Som (Liga/Desliga);
-else (Não)
+        :Registra velocidade temporária;
+    repeat while (Velocidade válida?) is (Não)
+    :Aplica e salva velocidade;
+    |Usuário|
+    :Percebe velocidade aplicada;
 endif
 
-if (Usuário deseja Desativar/Ativar Notificações?) then (Sim)
-    |Sistema|
-    :Inverte o Estado Atual da Configuração de Notificações (Liga/Desliga);
-else (Não)
+|Sistema|
+if (Alterar Som?) then (Sim)
+    :Inverte estado do som (on/off);
+    :Salva configuração de som;
+    |Usuário|
+    :Percebe som atualizado;
 endif
-=======
->>>>>>> ee32cc6de5043b8b25b22ec87e3743523d43651e
+
+|Sistema|
+if (Alterar Notificações?) then (Sim)
+    :Inverte estado das notificações;
+    :Salva configuração de notificação;
+    |Usuário|
+    :Percebe notificações atualizadas;
+endif
+
+|Usuário|
+:Sai da tela de Configurações;
 stop
-
 @enduml

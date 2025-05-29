@@ -1,28 +1,21 @@
 @startuml
 
-sprite $rake [16x16/8] {
-0000000000000000
-0000000jj0000000
-0000000jj0000000
-0005555jj5555000
-000jjeejjeejj000
-000jj00jj00jj000
-000jj00jj00jj000
-0000000000000000
-}
-
-title Iniciar Tutorial
+title Iniciar Tutorial (Otimizado)
 
 |Usuário|
 start
+:Acessa o aplicativo pela primeira vez / Solicita ver tutorial;
 |Sistema|
-:Inicia Usuário <$rake>;
-if(Usuário é novo?) then (Sim)
+:Verifica se é o primeiro acesso do usuário ou se o tutorial foi solicitado;
+if (É o primeiro acesso OU Tutorial foi solicitado?) then (Sim)
     |Usuário|
-    :Tutorial Didático;
+    :Interage com o Tutorial Didático Interativo;
     |Sistema|
+    :Registra que o tutorial de onboarding foi visualizado/concluído;
 else (Não)
+    :Pula a exibição do tutorial;
 endif
+:Prossegue para a tela principal do aplicativo;
 stop
 
 @enduml
