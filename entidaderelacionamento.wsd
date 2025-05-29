@@ -6,6 +6,9 @@ entity Usuario {
     + email: String
     + senha: String
     + perfil_investidor: String
+    + nivel: Integer
+    + data_nascimento: Date
+    + genero: String
 }
 
 entity Carteira {
@@ -20,6 +23,15 @@ entity Ativo {
     + nome: String
     + tipo: String
     + risco: String
+    + descricao: String
+}
+
+entity AtivoCarteira {
+    + id: UUID
+    + carteira_id: UUID
+    + ativo_id: UUID
+    + quantidade: Decimal
+    + preco_medio: Decimal
 }
 
 entity Transacao {
@@ -38,10 +50,27 @@ entity Desafio {
     + recompensa: String
 }
 
+entity DesafioUsuario {
+    + id: UUID
+    + usuario_id: UUID
+    + desafio_id: UUID
+    + status: String
+    + data_conclusao: Date
+}
+
 entity Quiz {
     + id: UUID
     + pergunta: String
     + resposta_correta: String
+    + recompensa: String
+}
+
+entity QuizUsuario {
+    + id: UUID
+    + usuario_id: UUID
+    + quiz_id: UUID
+    + pontuacao: Integer
+    + data_resposta: Date
 }
 
 entity Glossario {
@@ -50,10 +79,24 @@ entity Glossario {
     + definicao: String
 }
 
+entity Favorito {
+    + id: UUID
+    + usuario_id: UUID
+    + glossario_id: UUID
+}
+
 entity Conquista {
     + id: UUID
     + titulo: String
     + descricao: String
+    + icone: String
+}
+
+entity UsuarioConquista {
+    + id: UUID
+    + usuario_id: UUID
+    + conquista_id: UUID
+    + data_conquista: Date
 }
 
 entity RelatorioProgresso {
@@ -68,6 +111,7 @@ entity Ranking {
     + id: UUID
     + usuario_id: UUID
     + posicao: Integer
+    + pontuacao: Decimal
 }
 
 entity Convite {
@@ -75,17 +119,62 @@ entity Convite {
     + remetente_id: UUID
     + destinatario_id: UUID
     + status: String
+    + data_envio: Date
+}
+
+entity Amizade {
+    + id: UUID
+    + usuario1_id: UUID
+    + usuario2_id: UUID
+    + data_inicio: Date
+}
+
+entity Notificacao {
+    + id: UUID
+    + usuario_id: UUID
+    + mensagem: String
+    + data_envio: Date
+    + lida: Boolean
+}
+
+entity Atalho {
+    + id: UUID
+    + usuario_id: UUID
+    + nome: String
+    + destino: String
+}
+
+entity EstatisticaQuiz {
+    + id: UUID
+    + usuario_id: UUID
+    + quiz_id: UUID
+    + acertos: Integer
+    + erros: Integer
 }
 
 Usuario ||--o{ Carteira : possui
+Carteira ||--o{ AtivoCarteira : possui
+Ativo ||--o{ AtivoCarteira : compõe
 Carteira ||--o{ Transacao : realiza
-Carteira ||--o{ Ativo : contém
-Usuario ||--o{ Desafio : participa
-Usuario ||--o{ Quiz : responde
-Usuario ||--o{ Conquista : desbloqueia
+Ativo ||--o{ Transacao : movimenta
+
+Usuario ||--o{ DesafioUsuario : realiza
+Desafio ||--o{ DesafioUsuario : é_realizado
+Usuario ||--o{ QuizUsuario : responde
+Quiz ||--o{ QuizUsuario : é_respondido
+
+Usuario ||--o{ Favorito : favorita
+Glossario ||--o{ Favorito : é_favoritado
+
+Usuario ||--o{ UsuarioConquista : conquista
+Conquista ||--o{ UsuarioConquista : é_conquistada
+
 Usuario ||--o{ RelatorioProgresso : gera
 Usuario ||--o{ Ranking : aparece_em
 Usuario ||--o{ Convite : envia
-Glossario ||--o{ Usuario : favoritado_por
+Usuario ||--o{ Amizade : amigo
+Usuario ||--o{ Notificacao : recebe
+Usuario ||--o{ Atalho : possui
+Usuario ||--o{ EstatisticaQuiz : estatistica
 
 @enduml
