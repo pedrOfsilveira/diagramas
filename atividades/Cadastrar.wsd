@@ -11,19 +11,20 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Inicia Usuário
+title Cadastrar-se
 
 |Usuário|
 start
-|Sistema|
-if(Usuário está logado?) then (Não)
-    |Usuário|
-    :Fazer Login <$rake>;
-    |Sistema|
+if(Entrar com o Google?) then (Não)
+    :Preencher Nome;
+    :Preencher Gênero;
+    :Preencher Data de Nascimento;
+    :Preencher Email;
+    :Preencher Senha;
+    :Preencher Confirmar Senha;
 else (Sim)
 endif
-:Buscar Dados;
+|Sistema|
 :Usuário]
-stop
 
 @enduml

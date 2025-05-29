@@ -33,7 +33,7 @@ repeat
     :Selecionar Pré, Pós Fixado ou IPCA;
     |Sistema|
 repeat while(Todas Informações Foram Preenchidas?) is (Não) not (Sim)
-:Busca Valores na Brapi;
+:Buscar Dados da Brapi]
 :Calcula Montante Final;
 stop
 

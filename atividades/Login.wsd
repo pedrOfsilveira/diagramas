@@ -7,7 +7,9 @@ start
 repeat
     :Preencher Usuário e Senha;
     |Sistema|
-repeat while(Usuário e Senha Corretos?) is (Não) not (Sim)
+    :Buscar Dados;
+    :Usuário]
+repeat while(Usuário e Formulário Coincidem?) is (Não) not (Sim)
 stop
 
 @enduml

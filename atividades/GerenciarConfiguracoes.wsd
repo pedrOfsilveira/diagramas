@@ -17,32 +17,13 @@ title Gerenciar Configurações
 start
 |Sistema|
 :Inicia Usuário <$rake>;
-if(Mudar de Tema?) then (Sim)
-    repeat
-    |Usuário|
-    :Seleciona Tema;
-    repeat while (Tema Selecionado?) is (Não) not (Sim)
-    |Sistema|
-    :Atualiza Tema Atual para o Pedido;
-else (Não)
-endif
 if(Mudar Velocidade?) then (Sim)
     repeat
     |Usuário|
     :Seleciona Velocidade;
-    repeat while (Tema Selecionado?) is (Não) not (Sim)
+    repeat while (Velocidade Selecionada?) is (Não) not (Sim)
     |Sistema|
     :Atualiza Velocidade Atual para a Pedida;
-else (Não)
-endif
-if(Desativar/Ativar Som?) then (Sim)
-    |Sistema|
-    :Atualiza o Som Sendo o Contrário ao Estado Atual;
-else (Não)
-endif
-if(Desativar/Ativar Notificações?) then (Sim)
-    |Sistema|
-    :Atualiza as Notificações Sendo o Contrário ao Estado Atual;
 else (Não)
 endif
 stop
