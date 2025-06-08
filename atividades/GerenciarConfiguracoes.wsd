@@ -1,53 +1,31 @@
 @startuml
-title Gerenciar Configurações (Otimizado)
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Gerenciar Configurações
 
 |Usuário|
 start
-:Acessa a tela de Configurações;
-
 |Sistema|
-if (Alterar Tema?) then (Sim)
-    |Usuário|
+:Inicia Usuário <$rake>;
+if(Mudar Velocidade?) then (Sim)
     repeat
-        :Seleciona tema (Claro, Escuro, Auto);
+    |Usuário|
+    :Seleciona Velocidade;
+    repeat while (Velocidade Selecionada?) is (Não) not (Sim)
     |Sistema|
-        :Registra seleção temporária;
-    repeat while (Tema válido?) is (Não)
-    :Aplica e salva o tema;
-    |Usuário|
-    :Visualiza tema atualizado;
+    :Atualiza Velocidade Atual para a Pedida;
+else (Não)
 endif
-
-|Sistema|
-if (Alterar Velocidade?) then (Sim)
-    |Usuário|
-    repeat
-        :Seleciona velocidade (Lenta, Normal, Rápida);
-    |Sistema|
-        :Registra velocidade temporária;
-    repeat while (Velocidade válida?) is (Não)
-    :Aplica e salva velocidade;
-    |Usuário|
-    :Percebe velocidade aplicada;
-endif
-
-|Sistema|
-if (Alterar Som?) then (Sim)
-    :Inverte estado do som (on/off);
-    :Salva configuração de som;
-    |Usuário|
-    :Percebe som atualizado;
-endif
-
-|Sistema|
-if (Alterar Notificações?) then (Sim)
-    :Inverte estado das notificações;
-    :Salva configuração de notificação;
-    |Usuário|
-    :Percebe notificações atualizadas;
-endif
-
-|Usuário|
-:Sai da tela de Configurações;
 stop
+
 @enduml

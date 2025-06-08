@@ -1,65 +1,49 @@
 @startuml
 
-title Gerenciar Ativos (Versão Otimizada)
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Gerenciar Ativos
 
 |Usuário|
 start
-:Acessa "Gerenciar Ativos";
-
 |Sistema|
-:Carrega dados da API Brapi;
-
+:Inicia Usuário <$rake>;
+:Buscar Dados da Brapi <$rake>;
 |Usuário|
-:Visualiza ativos e saldo;
-:Escolhe "Comprar" ou "Vender";
-
+:Seleciona comprar ou vender;
 |Sistema|
-if (Escolheu Comprar) then (Sim)
-
-    |Usuário|
-    :Seleciona ativo;
-    :Informa quantidade;
-    :Confirma compra;
-
+if(Selecionou Comprar?) then (Sim)
+|Usuário|
+    :Seleciona Quantidade;
+    label space
     |Sistema|
-    :Calcula valor (Qtd × Preço);
-    if (Saldo suficiente?) then (Sim)
-        :Adiciona ativo à carteira;
-        :Debita valor do saldo;
-        :Registra transação de compra;
-
-        |Usuário|
-        :Confirmação de compra;
+    :Calcula Valor Final da Compra;
+    if(Saldo Suficiente?) then (Sim)
+        :Adiciona Ativo à Lista de Ativos;
+        :Subtrai Do Saldo o Valor Final da Compra;
     else (Não)
-        |Usuário|
-        :Mensagem: "Saldo insuficiente";
     endif
-
-else (Escolheu Vender)
-
-    |Usuário|
-    :Seleciona ativo;
-    :Informa quantidade;
-    :Confirma venda;
-
+else (Não)
+|Usuário|
+    :Seleciona Quantidade;
     |Sistema|
-    :Calcula valor (Qtd × Preço);
-    if (Qtd disponível?) then (Sim)
-        :Remove ativo da carteira;
-        :Credita valor ao saldo;
-        :Registra transação de venda;
-
-        |Usuário|
-        :Confirmação de venda;
+    :Calcula Valor Final da Venda;
+    if(Quantidade Possível?) then (Sim)
+        :Remove Ativo da Lista de Ativos;
+        :Adiciona ao Saldo o Valor Final da Venda;
     else (Não)
-        |Usuário|
-        :Mensagem: "Qtd. insuficiente";
     endif
-
 endif
-
-|Sistema|
-:Atualiza tela de ativos;
+:Lista de Ativos]
 stop
 
 @enduml

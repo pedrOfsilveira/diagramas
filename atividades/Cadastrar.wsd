@@ -1,36 +1,30 @@
 @startuml
-title Cadastrar-se (Manual com Firebase)
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Cadastrar-se
 
 |Usuário|
 start
-:Acessa tela de Cadastro;
-:Escolhe opção "Cadastrar com Email";
-:Preencher Nome;
-:Preencher Gênero;
-:Preencher Data de Nascimento;
-:Preencher Email;
-:Preencher Senha;
-:Preencher Confirmar Senha;
-:Clica em "Cadastrar";
-
-|Sistema|
-if (Dados válidos e senhas coincidem?) then (Sim)
-  :Solicitar criação de conta ao Firebase;
-  if (Conta criada com sucesso?) then (Sim)
-    :Salvar dados adicionais no banco local;
-    :Direcionar para Login ou Onboarding;
-    stop
-  else (Erro Firebase)
-    |Usuário|
-    :Exibir erro do Firebase (ex: email já existe);
-    :Retornar à tela de cadastro;
-    stop
-  endif
-else (Erro de dados)
-  |Usuário|
-  :Exibir erro de validação (ex: senhas não coincidem);
-  :Retornar à tela de cadastro;
-  stop
+if(Entrar com o Google?) then (Não)
+    :Preencher Nome;
+    :Preencher Gênero;
+    :Preencher Data de Nascimento;
+    :Preencher Email;
+    :Preencher Senha;
+    :Preencher Confirmar Senha;
+else (Sim)
 endif
+|Sistema|
+:Usuário]
 
 @enduml

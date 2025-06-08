@@ -1,50 +1,50 @@
 @startuml
 
-title Iniciar e Responder Quiz (Fluxo Corrigido)
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Iniciar Quiz
 
 |Usuário|
 start
 |Sistema|
-if (Novo Dia?) then (Sim)
-    :Remove Quizzes Antigos da Lista Diária;
-    :Adiciona Novos Quizzes à Lista Diária;
+:Inicia Usuário <$rake>;
+if(Novo Dia?) then (Sim)
+    :Remove Todos os Quizes da Lista de Quizes Diários;
+    :Adiciona Novos Quizes á Lista de Quizes Diários;
 else (Não)
 endif
-:Exibe Lista de Quizzes Disponíveis;
-|Usuário|
-:Seleciona um Quiz para iniciar;
-|Sistema|
-:Carrega Perguntas do Quiz Selecionado;
-:Define Pergunta Atual como a primeira da lista;
 repeat
-    :Apresenta Pergunta Atual e suas Alternativas;
     |Usuário|
-    :Seleciona uma Alternativa como resposta;
+    :Seleciona Alternativa;
     |Sistema|
-    :Verifica se a Alternativa selecionada está Correta;
-    if (Acertou?) then (Sim)
-        :Adiciona Pontos de Experiência (relacionados ao Tema da Questão);
+    if(Acertou?) then (Sim)
+        :Adiciona Pontos de Experiência ao Tema da Questão;
+        note right
+            <b>Exemplo:<b> 10 Pontos 
+        end note
     else (Não)
-        :Adiciona Pontos de Experiência (valor menor ou feedback específico);
+        :Adiciona Menos Pontos de Experiência ao Tema da Questão;
+        note left
+            <b>Exemplo:<b> 3 Pontos 
+        end note
     endif
-    :Verifica se há mais perguntas no Quiz;
-    if (Há mais perguntas?) then (Sim)
-        :Define Pergunta Atual como a próxima da lista;
-    else (Não)
-        ' Marca o quiz como concluído para sair do loop
-    endif
-repeat while (Quiz Concluído?) is (Não)
-' O loop continua se "Quiz Concluído?" for "Não".
-' (Ou seja, enquanto houver perguntas a serem respondidas)
-' Quando "Quiz Concluído?" se tornar "Sim", o loop termina.
-
-:Calcula Porcentagem Final de Acertos para o Quiz;
-:Atualiza Estatísticas de Progresso em Quiz do Usuário;
-:Processa e Adiciona Recompensa (Saldo ou Ativo) ao Usuário;
+repeat while (Quiz Concluido?) is (Nao) not (Sim)
+:Calcula Porcentagem de Acertos por Questoes;
+:Atualiza as Estátisticas de Progresso em Quiz;
+:Adiciona Saldo ou Ativo ao Usuário;
 |Usuário|
-:Visualiza Porcentagem de Acertos;
-:Visualiza Estatísticas de Progresso Atualizadas;
-:Visualiza Recompensa Recebida (Saldo ou Ativos);
+:Porcentagem de Acertos]
+:Estatisticas de Progresso em Quiz]
+:Saldo ou Ativos]
 stop
 
 @enduml

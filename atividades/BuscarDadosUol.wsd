@@ -1,19 +1,25 @@
 @startuml
 
-title Sistema Busca Dados da UOL
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
 
-|Sistema|
+title Buscar Dados da Uol
+
+|Usuário|
 start
-:Verificar/Obter Chave de Acesso para API UOL;
-if (Chave de Acesso Válida?) then (Sim)
-    :Conectar à API da UOL;
-    :Requisitar Dados de Notícias/Eventos;
-    :Receber Dados da UOL;
-    :Processar/Armazenar Dados Recebidos;
-    :Sinalizar que novos dados estão disponíveis (para exibição);
-else (Não)
-    :Registrar falha na obtenção da chave/acesso;
-endif
+|Sistema|
+:Inicia Usuário <$rake>;
+:Confirma Chave de Acesso;
+:Busca Dados Uol;
+:Dados]
 stop
 
 @enduml

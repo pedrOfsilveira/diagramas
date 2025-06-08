@@ -1,32 +1,31 @@
 @startuml
 
-title Gerenciar Pedidos de Amizade (Otimizado)
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Gerenciar Pedidos
 
 |Usuário|
 start
-:Acessa a tela de "Pedidos de Amizade";
 |Sistema|
-:Carrega e exibe os pedidos de amizade pendentes;
+:Inicia Usuário <$rake>;
 |Usuário|
-if (Existem pedidos pendentes?) then (Sim)
-    :Seleciona um pedido específico da lista;
-    :Escolhe a ação "Aceitar" ou "Recusar" para o pedido selecionado;
-    |Sistema|
-    if (Ação escolhida é "Aceitar"?) then (Sim)
-        :Adiciona o remetente do pedido à lista de amigos do usuário atual;
-        :Atualiza o status do pedido para "Aceito";
-    else (Não - Ação escolhida é "Recusar")
-        :Atualiza o status do pedido para "Recusado";
-    endif
-    :Remove o pedido processado da lista de pendentes;
-    :Prepara a lista de pedidos atualizada para exibição;
-    |Usuário|
-    :Visualiza a lista de pedidos de amizade atualizada;
-    :Visualiza mensagem de confirmação da ação (aceito/recusado);
-else (Não - Nenhum pedido pendente)
-    |Usuário|
-    :Visualiza mensagem "Nenhum pedido de amizade pendente";
+:Seleciona Aceitar ou Recusar Pedido;
+|Sistema|
+if(Pedido Aceito?) then (Sim)
+    :Adiciona Amigo a Lista de Amigos;
+else (Não)
 endif
+:Remove Pedido;
+:Lista de Pedidos]
 stop
 
 @enduml

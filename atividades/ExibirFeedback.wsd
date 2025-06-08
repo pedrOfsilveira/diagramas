@@ -1,15 +1,26 @@
 @startuml
 
-title Exibir Feedback Personalizado (Revisado)
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
 
-|Sistema|
-start
-:Carrega Estatísticas de Investimento do Usuário;
-:Carrega Progresso em Quiz do Usuário;
-:Analisa os dados e Gera Recomendações/Insights;
-:Prepara Feedback Personalizado para exibição;
+title Exibir Feedback Personalizado
+
 |Usuário|
-:Visualiza Feedback Personalizado e Recomendações;
+start
+|Sistema|
+:Inicia Usuário <$rake>;
+:Carrega Estatisticas de Investimento]
+:Carrega Progresso em Quiz]
+|Usuário|
+:FeedBack Personalizado]
 stop
 
 @enduml

@@ -1,21 +1,25 @@
 @startuml
 
-title Exibir Notícias e Eventos do Mercado (Revisado)
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Exibir Notícias e Eventos do Mercado
 
 |Usuário|
 start
-:Acessa a seção de Notícias;
 |Sistema|
-:Sistema solicita ao Serviço UOL as últimas notícias;
-note right
-  Interação com a API externa da UOL
-  para buscar dados de notícias e eventos.
-end note
-:Serviço UOL retorna os dados das notícias;
-:Sistema processa e formata as notícias recebidas;
-:Prepara a lista de notícias para exibição;
+:Inicia Usuário <$rake>;
+:Buscar Dados da Uol <$rake>;
 |Usuário|
-:Visualiza a lista de Notícias e Eventos do Mercado;
+:Noticias e Eventos;
 stop
 
 @enduml
