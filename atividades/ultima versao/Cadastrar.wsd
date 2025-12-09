@@ -11,18 +11,17 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Adicionar Amigos
+title Cadastrar-se
 
 |Usuário|
 start
+:Preencher Nome;
+:Preencher Gênero;
+:Preencher Data de Nascimento;
+:Preencher Email;
+:Preencher Senha;
+:Preencher Confirmar Senha;
 |Sistema|
-:Inicia Usuário <$rake>;
-repeat
-|Usuário|
-:Preencher ID do Amigo;
-|Sistema|
-repeat while (ID Existe?) is (Não) not (Sim)
-:Envia Pedido ao Amigo;
-stop
+:Usuário]
 
 @enduml

@@ -1,0 +1,36 @@
+@startuml
+
+sprite $rake [16x16/8] {
+0000000000000000
+0000000jj0000000
+0000000jj0000000
+0005555jj5555000
+000jjeejjeejj000
+000jj00jj00jj000
+000jj00jj00jj000
+0000000000000000
+}
+
+title Ver Anti-Golpe
+
+|Usuário|
+start
+|Sistema|
+:Inicia Usuário <$rake>;
+|Usuário|
+:Preencher Buscar;
+|Sistema|
+if(Buscar Vazio ou Categoria Todos?) then (Não)
+    :Busca Correspondência;
+    if(Existe Correspondência?) then (Sim)
+        :Palavras correspondentes]
+    else (Não)
+    endif
+else (Sim)
+    :Todas as Palavras]
+endif
+|Usuário|
+:Lista de Palavras]
+stop
+
+@enduml

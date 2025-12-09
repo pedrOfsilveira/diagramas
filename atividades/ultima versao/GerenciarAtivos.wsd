@@ -17,7 +17,6 @@ title Gerenciar Ativos
 start
 |Sistema|
 :Inicia Usuário <$rake>;
-:Buscar Dados da Brapi <$rake>;
 |Usuário|
 :Seleciona comprar ou vender;
 |Sistema|

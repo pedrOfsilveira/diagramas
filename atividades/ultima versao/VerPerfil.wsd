@@ -20,7 +20,6 @@ start
 |Usuário|
 :Dados do Perfil]
 :Estatísticas dos Investimentos]
-:Estatísticas do Progresso em Quiz]
 if(Editar Dados?) then (Sim)
     :Preencher Nome;
     :Preencher Gênero;
@@ -33,11 +32,6 @@ if(Editar Dados?) then (Sim)
 else (Não)
 endif
 |Usuário|
-if(Apagar conta?) then (Sim)
-    |Sistema|
-    :Anonimizar Dados <$rake>;
-else (Não)
-endif
 end
 
 @enduml

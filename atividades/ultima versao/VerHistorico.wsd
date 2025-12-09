@@ -11,7 +11,7 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Ver Glossário
+title Ver Histórico
 
 |Usuário|
 start
@@ -20,17 +20,17 @@ start
 |Usuário|
 :Preencher Buscar;
 |Sistema|
-if(Buscar Vazio?) then (Não)
+if(Buscar Vazio ou Categoria Todos?) then (Não)
     :Busca Correspondência;
     if(Existe Correspondência?) then (Sim)
-        :Palavras correspondentes]
+        :Transações correspondentes]
     else (Não)
     endif
 else (Sim)
-    :Todas as Palavras]
+    :Todas as Transações]
 endif
 |Usuário|
-:Lista de Palavras]
+:Lista de Transações]
 stop
 
 @enduml

@@ -17,11 +17,7 @@ title Iniciar Quiz
 start
 |Sistema|
 :Inicia Usuário <$rake>;
-if(Novo Dia?) then (Sim)
-    :Remove Todos os Quizes da Lista de Quizes Diários;
-    :Adiciona Novos Quizes á Lista de Quizes Diários;
-else (Não)
-endif
+:Seleciona 6 Questões aleatórias da Lista de Quiz;
 repeat
     |Usuário|
     :Seleciona Alternativa;
@@ -29,22 +25,22 @@ repeat
     if(Acertou?) then (Sim)
         :Adiciona Pontos de Experiência ao Tema da Questão;
         note right
-            <b>Exemplo:<b> 10 Pontos 
+            <b>Exemplo:<b> 1 Pontos 
         end note
     else (Não)
-        :Adiciona Menos Pontos de Experiência ao Tema da Questão;
+        :Adiciona Zero Pontos de Experiência ao Tema da Questão;
         note left
-            <b>Exemplo:<b> 3 Pontos 
+            <b>Exemplo:<b> 0 Pontos
         end note
     endif
 repeat while (Quiz Concluido?) is (Nao) not (Sim)
-:Calcula Porcentagem de Acertos por Questoes;
-:Atualiza as Estátisticas de Progresso em Quiz;
-:Adiciona Saldo ou Ativo ao Usuário;
+:Calcula Porcentagem de Acertos;
 |Usuário|
 :Porcentagem de Acertos]
-:Estatisticas de Progresso em Quiz]
-:Saldo ou Ativos]
+:Link para Tema com menos pontos;
+note right
+    <b>Exemplo:<b> Glossário 
+end note
 stop
 
 @enduml

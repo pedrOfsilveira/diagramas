@@ -11,7 +11,7 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Gerenciar Amigos
+title Ver Glossário
 
 |Usuário|
 start
@@ -20,31 +20,17 @@ start
 |Usuário|
 :Preencher Buscar;
 |Sistema|
-if(Buscar Vazio?) then (Não)
+if(Buscar Vazio ou Categoria Todos?) then (Não)
     :Busca Correspondência;
     if(Existe Correspondência?) then (Sim)
-        :Amigos correspondentes]
+        :Palavras correspondentes]
     else (Não)
     endif
 else (Sim)
-    :Todos os Amigos]
+    :Todas as Palavras]
 endif
 |Usuário|
-if(Adicionar Amigo?) then (Sim)
-    |Sistema|
-    :Adicionar Amigos <$rake>;
-else (Não)
-endif
-|Usuário|
-if(Remover Amigo?) then (Sim)
-    |Usuário|
-    :Seleciona Amigo que Deseja Remover;
-    |Sistema|
-    :Remove Amigo da Lista de Amigos;
-else (Não)
-endif
-|Usuário|
-:Lista de Amigos]
+:Lista de Palavras]
 stop
 
 @enduml

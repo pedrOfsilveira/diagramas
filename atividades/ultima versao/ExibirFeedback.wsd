@@ -18,7 +18,6 @@ start
 |Sistema|
 :Inicia Usuário <$rake>;
 :Carrega Estatisticas de Investimento]
-:Carrega Progresso em Quiz]
 |Usuário|
 :FeedBack Personalizado]
 stop

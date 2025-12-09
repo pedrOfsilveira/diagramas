@@ -17,18 +17,11 @@ title Completar Desafios
 start
 |Sistema|
 :Inicia Usuário <$rake>;
-if(Novo Dia?) then (Sim)
-    :Remove Todos os Desafios da Lista de Desafios Diários;
-    :Adiciona Novos Desafios á Lista de Desafios Diários;
-else (Não)
-endif
+:Carrega Desafios]
+
 if(Desafios Concluidos?) then (Sim)
     :Adiciona Saldo ou Ativo ao Usuário;
-    if(Desafio Diário?) then (Sim)
-        :Remove Desafio da Lista de Desafios Diários;
-    else (Não)
-        :Adiciona Desafio a Lista de Conquistas;
-    endif
+    :Adiciona desafio a lista Desafio_Usuário;
 else (Não)
 endif
 |Usuário|

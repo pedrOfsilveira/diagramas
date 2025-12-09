@@ -3,9 +3,8 @@ left to right direction
 
 actor ":Usuario:" as User
 actor ":Administrador:" as Admin
-actor ":Serviço Firebase Auth:" as ServicoFirebaseAuth <<Serviço Externo>>
+actor ":Serviço Supabase Auth:" as ServicoSupabaseAuth <<Serviço Externo>>
 actor ":Serviço UOL Notícias:" as ServicoUolApi <<Serviço Externo>>
-actor ":Serviço Brapi Dados:" as ServicoBrapiApi <<Serviço Externo>>
 
 Admin --|> User
 
@@ -20,14 +19,10 @@ rectangle "Blue Bee App" {
     usecase "Completar Desafios" as UC_CompletarDesafios
     usecase "Iniciar Quiz" as UC_IniciarQuiz
     usecase "Ver Glossário" as UC_VerGlossario
-    usecase "Gerenciar Configurações do App" as UC_GerenciarConfigApp
-    usecase "Gerenciar Amigos" as UC_GerenciarAmigos
-    usecase "Gerenciar Pedidos de Amizade" as UC_GerenciarPedidosAmizade
 
     usecase "Gerenciar Conteúdo Educacional" as UC_AdminConteudo
     usecase "Gerenciar Notícias do Mercado" as UC_AdminNoticias
     usecase "Gerenciar Termos do Glossário" as UC_AdminGlossario
-    usecase "Moderar Interações de Usuários" as UC_AdminModeracao
     usecase "Monitorar Funcionamento do Sistema" as UC_AdminMonitorar
     usecase "Gerenciar Usuários" as UC_AdminGerenciarUsuarios
 }
@@ -42,21 +37,16 @@ User -- UC_SimularInvestimentos
 User -- UC_CompletarDesafios
 User -- UC_IniciarQuiz
 User -- UC_VerGlossario
-User -- UC_GerenciarConfigApp
-User -- UC_GerenciarAmigos
-User -- UC_GerenciarPedidosAmizade
 
+' talvez nao precise de admin
 Admin -- UC_AdminConteudo
 Admin -- UC_AdminNoticias
 Admin -- UC_AdminGlossario
-Admin -- UC_AdminModeracao
 Admin -- UC_AdminMonitorar
 Admin -- UC_AdminGerenciarUsuarios
 
-UC_Auth -- ServicoFirebaseAuth
+UC_Auth -- ServicoSupabaseAuth
 UC_ExibirNoticias -- ServicoUolApi
-UC_GerenciarAtivosCarteira -- ServicoBrapiApi
-UC_SimularInvestimentos -- ServicoBrapiApi
 UC_AdminNoticias -- ServicoUolApi
 
 @enduml
