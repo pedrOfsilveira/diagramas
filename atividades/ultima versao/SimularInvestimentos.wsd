@@ -19,18 +19,22 @@ start
 :Inicia Usuário <$rake>;
 |Usuário|
 repeat
-    :Preencher Investimento Inicial;
+    :Preencher Valor Inicial;
     :Preencher Aporte Mensal;
-    :Preencher Periodo de Aplicação;
-    :Selecionar Tipo de Investimento;
+    :Preencher Periodo de Aplicação (Anos);
+    :Preencher Rentabilidade Anual Estimada (%);
+    :Selecionar Indexador Base;
     note right
-        CDB/LC/Títulos públicos/Debêntures
+        Nenhum (usar rentabilidade acima)
         ====
-        LCI/LCA
+        CDI (11,25% a.a.)
         ====
-        Tesouro
+        Poupança (6,17% a.a.)
+        ====
+        Tesouro Selic (10,76% a.a.)
+        ====
+        Tesouro IPCA (9,50% a.a. + IPCA)
     end note
-    :Selecionar Pré, Pós Fixado ou IPCA;
     |Sistema|
 repeat while(Todas Informações Foram Preenchidas?) is (Não) not (Sim)
 :Calcula Montante Final;
