@@ -2,11 +2,9 @@
 left to right direction
 
 actor ":Usuario:" as User
-actor ":Administrador:" as Admin
 actor ":Serviço Supabase Auth:" as ServicoSupabaseAuth <<Serviço Externo>>
 actor ":Serviço UOL Notícias:" as ServicoUolApi <<Serviço Externo>>
 
-Admin --|> User
 
 rectangle "Blue Bee App" {
     usecase "Autenticar Usuário" as UC_Auth
@@ -19,12 +17,6 @@ rectangle "Blue Bee App" {
     usecase "Completar Desafios" as UC_CompletarDesafios
     usecase "Iniciar Quiz" as UC_IniciarQuiz
     usecase "Ver Glossário" as UC_VerGlossario
-
-    usecase "Gerenciar Conteúdo Educacional" as UC_AdminConteudo
-    usecase "Gerenciar Notícias do Mercado" as UC_AdminNoticias
-    usecase "Gerenciar Termos do Glossário" as UC_AdminGlossario
-    usecase "Monitorar Funcionamento do Sistema" as UC_AdminMonitorar
-    usecase "Gerenciar Usuários" as UC_AdminGerenciarUsuarios
 }
 
 User -- UC_Auth
@@ -38,15 +30,7 @@ User -- UC_CompletarDesafios
 User -- UC_IniciarQuiz
 User -- UC_VerGlossario
 
-' talvez nao precise de admin
-Admin -- UC_AdminConteudo
-Admin -- UC_AdminNoticias
-Admin -- UC_AdminGlossario
-Admin -- UC_AdminMonitorar
-Admin -- UC_AdminGerenciarUsuarios
-
 UC_Auth -- ServicoSupabaseAuth
 UC_ExibirNoticias -- ServicoUolApi
-UC_AdminNoticias -- ServicoUolApi
 
 @enduml
