@@ -1,0 +1,33 @@
+@startuml
+
+title Definir Perfil de Investidor
+
+|Usuário|
+start
+|Sistema|
+:Carrega Questionário]
+|Usuário|
+repeat
+    if(Passou para a próxima alternativa?) then (Sim)
+        if(Selecionou uma alternativa?) then (Sim)
+            |Sistema|
+            :Adiciona alternativa a lista de respostas]
+            |Usuário|
+        else (Não)
+        label space
+        :Seleciona alternativa;
+        endif
+    else (Não)
+        label space
+        label space
+        :Seleciona próxima questão;
+endif
+repeat while(Foram preenchidas todo o questionário?) is (Não) not (Sim)
+|Sistema|
+:Carrega lista de respostas]
+:Calcula o Perfil de Investidor (Conservador, Moderado, Agressivo);
+:Salva/Atualiza o Usuário com novo Perfil de Investidor;
+:Usuário atualizado]
+stop
+
+@enduml

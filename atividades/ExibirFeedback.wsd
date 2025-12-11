@@ -11,15 +11,14 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Buscar Dados da Uol
+title Exibir Feedback Personalizado
 
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
-:Confirma Chave de Acesso;
-:Busca Dados Uol;
-:Dados]
+:Carrega Estatisticas de Investimento]
+|Usuário|
+:FeedBack Personalizado]
 stop
 
 @enduml

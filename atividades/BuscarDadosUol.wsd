@@ -11,19 +11,14 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Inicia Usuário
+title Buscar Dados da Uol
 
 |Usuário|
 start
 |Sistema|
-if(Usuário está logado?) then (Não)
-    |Usuário|
-    :Fazer Login <$rake>;
-    |Sistema|
-else (Sim)
-endif
-:Buscar Dados;
-:Usuário]
+:Confirma Chave de Acesso;
+:Busca Dados Uol;
+:Dados]
 stop
 
 @enduml

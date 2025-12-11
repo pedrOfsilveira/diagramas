@@ -11,18 +11,19 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Iniciar Tutorial
+title Completar Desafios
 
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
-if(Usuário é novo?) then (Sim)
-    |Usuário|
-    :Tutorial Didático;
-    |Sistema|
+:Carrega Desafios]
+if(Desafios Concluidos?) then (Sim)
+    :Adiciona Saldo ou Ativo ao Usuário;
+    :Adiciona desafio a lista Desafio_Usuário;
 else (Não)
 endif
+|Usuário|
+:Lista de Desafios]
 stop
 
 @enduml

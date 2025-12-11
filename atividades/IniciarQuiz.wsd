@@ -16,7 +16,6 @@ title Iniciar Quiz
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
 :Seleciona 6 Questões aleatórias da Lista de Quiz;
 repeat
     |Usuário|

@@ -17,6 +17,8 @@ rectangle "Blue Bee App" {
     usecase "Completar Desafios" as UC_CompletarDesafios
     usecase "Iniciar Quiz" as UC_IniciarQuiz
     usecase "Ver Glossário" as UC_VerGlossario
+    usecase "Editar perfil" as UC_EditPerfil
+    usecase "Sair da conta" as UC_SairConta
 }
 
 User -- UC_Auth
@@ -29,6 +31,9 @@ User -- UC_SimularInvestimentos
 User -- UC_CompletarDesafios
 User -- UC_IniciarQuiz
 User -- UC_VerGlossario
+
+UC_VerPerfil <. UC_EditPerfil : <<extends>>
+UC_VerPerfil <. UC_SairConta : <<extends>>
 
 UC_Auth -- ServicoSupabaseAuth
 UC_ExibirNoticias -- ServicoUolApi

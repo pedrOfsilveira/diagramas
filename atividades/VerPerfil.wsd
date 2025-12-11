@@ -15,8 +15,6 @@ title Ver Perfil
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
 |Usuário|
 :Dados do Perfil]
 :Estatísticas dos Investimentos]

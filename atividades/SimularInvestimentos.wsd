@@ -15,8 +15,6 @@ title Simular Investimentos
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
 |Usuário|
 repeat
     :Preencher Valor Inicial;

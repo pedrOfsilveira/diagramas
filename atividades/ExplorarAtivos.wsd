@@ -11,26 +11,24 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Ver Glossário
+title Explorar Ativos
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
 |Usuário|
 :Preencher Buscar;
 |Sistema|
 if(Buscar Vazio ou Categoria Todos?) then (Não)
     :Busca Correspondência;
     if(Existe Correspondência?) then (Sim)
-        :Palavras correspondentes]
+        :Ativos correspondentes]
     else (Não)
     endif
 else (Sim)
-    :Todas as Palavras]
+    :Todos os Ativos]
 endif
 |Usuário|
-:Lista de Palavras]
+:Lista de Ativos]
 stop
 
 @enduml

@@ -15,9 +15,6 @@ title Ver Histórico
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
-|Usuário|
 :Preencher Buscar;
 |Sistema|
 if(Buscar Vazio ou Categoria Todos?) then (Não)

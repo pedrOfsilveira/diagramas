@@ -15,8 +15,6 @@ title Gerenciar Ativos
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
 |Usuário|
 :Seleciona comprar ou vender;
 |Sistema|

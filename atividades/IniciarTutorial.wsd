@@ -11,15 +11,17 @@ sprite $rake [16x16/8] {
 0000000000000000
 }
 
-title Exibir Feedback Personalizado
+title Iniciar Tutorial
 
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
-:Carrega Estatisticas de Investimento]
-|Usuário|
-:FeedBack Personalizado]
+if(Usuário é novo?) then (Sim)
+    |Usuário|
+    :Tutorial Didático;
+    |Sistema|
+else (Não)
+endif
 stop
 
 @enduml

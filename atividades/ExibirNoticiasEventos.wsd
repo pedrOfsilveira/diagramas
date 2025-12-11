@@ -16,7 +16,6 @@ title Exibir Notícias e Eventos do Mercado
 |Usuário|
 start
 |Sistema|
-:Inicia Usuário <$rake>;
 :Buscar Dados da Uol <$rake>;
 |Usuário|
 :Noticias e Eventos;

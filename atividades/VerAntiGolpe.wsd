@@ -15,8 +15,6 @@ title Ver Anti-Golpe
 
 |Usuário|
 start
-|Sistema|
-:Inicia Usuário <$rake>;
 |Usuário|
 :Preencher Buscar;
 |Sistema|
